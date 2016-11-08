@@ -81,7 +81,7 @@ public class News extends AsyncTask<String, String, String> {
             try {
 
                 JSONArray json = new JSONArray(jsonData);
-                listener.onGetNews(json);
+//                listener.onGetNews(json);
             }catch (JSONException e){
                 e.printStackTrace();
             }
