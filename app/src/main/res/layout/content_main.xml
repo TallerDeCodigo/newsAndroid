@@ -18,31 +18,69 @@
         android:id="@+id/card_view"
         android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         card_view:cardCornerRadius="4dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:layout_width="200dp"
                 android:layout_height="150dp"
-                app:srcCompat="@color/colorAccent"
+                app:srcCompat="@color/blue"
                 android:layout_alignParentTop="true"
                 android:id="@+id/imageView2"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="10dp"/>
 
             <TextView
-                android:text="El pasaje estándar Lorem Ipsum, usado desde el año 1500."
+                android:text="Lorem Ipsum, usado desde el año 1500."
+                android:textAlignment="textStart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txtTitle"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_alignParentBottom="true"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginBottom="5dp"
+                android:layout_below="@+id/imageView2" />
+
+            <TextView
+                android:text="Lorem Ipsum, usado desde el año 1500. El pasaje estándar Lorem Ipsum, usado desde el año 1500. Lorem Ipsum, usado desde el año 1500."
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtExcerpt"
+                android:textColor="@color/black"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginBottom="6dp"
+                android:layout_below="@+id/txtTitle"
                 android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:text="Agosto 12, 2016"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtTime"
+                android:textSize="10dp"
+                android:layout_below="@+id/txtExcerpt"
+                android:layout_alignEnd="@+id/txtExcerpt"
+                android:layout_marginBottom="12dp"/>
+
+            <TextView
+                android:text="#TemaDelPost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtHashtag"
+                android:textSize="11dp"
+                android:textStyle="bold"
+                android:textColor="@color/blue"
+                android:layout_marginLeft="12dp"
+                android:layout_alignTop="@+id/txtTime" />
 
         </RelativeLayout>
 

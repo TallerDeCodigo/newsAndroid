@@ -1,35 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
-    </group>
-
-    <item android:title="Communicate">
+    <item android:title="Tópicos">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:id="@+id/nav_1"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="Internacional" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:id="@+id/nav_2"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="Economía" />
+            <item
+                android:id="@+id/nav_3"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="Opinión" />
+        </menu>
+    </item>
+
+    <item android:title="Categrorías">
+        <menu>
+            <item
+                android:id="@+id/nav_4"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="Política" />
+            <item
+                android:id="@+id/nav_5"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="Economía" />
+            <item
+                android:id="@+id/nav_6"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="Opinión" />
+            <item
+                android:id="@+id/nav_7"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="Tecnología" />
+            <item
+                android:id="@+id/nav_8"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="Cultura" />
+            <item
+                android:id="@+id/nav_9"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="Entretenimiento" />
         </menu>
     </item>
 
