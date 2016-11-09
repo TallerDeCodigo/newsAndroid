@@ -10,11 +10,11 @@
             <item
                 android:id="@+id/nav_2"
                 android:icon="@drawable/ic_menu_gallery"
-                android:title="Economía" />
+                android:title="Nacional" />
             <item
                 android:id="@+id/nav_3"
                 android:icon="@drawable/ic_menu_gallery"
-                android:title="Opinión" />
+                android:title="CDMX" />
         </menu>
     </item>
 
