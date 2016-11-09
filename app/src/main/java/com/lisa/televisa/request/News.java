@@ -49,7 +49,9 @@ public class News extends AsyncTask<String, String, String> {
         Request request = new Request.Builder()
                 .url(url)
                 .get()
-                .addHeader("content-type","application/json")
+                .addHeader("content-type", "application/json")
+                .addHeader("cache-control", "no-cache")
+                .addHeader("postman-token", "490f6d86-1550-f624-d422-21cea2cbdbf5")
                 .build();
 
         Response response = null;
