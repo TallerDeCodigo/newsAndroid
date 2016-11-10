@@ -5,6 +5,8 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,7 +21,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -33,6 +34,8 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.lisa.televisa.seccions.noticia;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -118,12 +121,20 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
 
+        Fragment fragment = null;
+        Class fragmentClass;
+
         int id = item.getItemId();
 
 
-        if(id == R.id.nav_cdmx){
 
+        if(id == R.id.nav_cdmx){
+            fragmentClass = noticia.class;
         }
+
+
+        
+
 
         //if (id == R.id.nav_camera) {
             // Handle the camera action
