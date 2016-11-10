@@ -5,15 +5,15 @@
         <menu>
             <item
                 android:id="@+id/nav_internacional"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_internacional"
                 android:title="Internacional" />
             <item
                 android:id="@+id/nav_nacional"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_nacional"
                 android:title="Nacional" />
             <item
                 android:id="@+id/nav_cdmx"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_cdmx"
                 android:title="CDMX" />
         </menu>
     </item>
@@ -22,28 +22,36 @@
         <menu>
             <item
                 android:id="@+id/nav_politica"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_politica"
                 android:title="Política" />
             <item
                 android:id="@+id/nav_economia"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_economia"
                 android:title="Economía" />
             <item
                 android:id="@+id/nav_opinion"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_opinion"
                 android:title="Opinión" />
             <item
                 android:id="@+id/nav_tecnologia"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Tecnología" />
+                android:icon="@drawable/ic_tecnologia"
+                android:title="Ciencia y Tecnología" />
             <item
                 android:id="@+id/nav_cultura"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_cultura"
                 android:title="Cultura" />
             <item
+                android:id="@+id/nav_deportes"
+                android:icon="@drawable/ic_deportes"
+                android:title="Deportes" />
+            <item
                 android:id="@+id/nav_entretenimiento"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_entretenimiento"
                 android:title="Entretenimiento" />
+            <item
+                android:id="@+id/nav_vida"
+                android:icon="@drawable/ic_vida"
+                android:title="Vida y Estilo" />
         </menu>
     </item>
 
