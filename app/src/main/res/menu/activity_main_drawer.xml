@@ -4,16 +4,16 @@
     <item android:title="Tópicos">
         <menu>
             <item
-                android:id="@+id/nav_1"
-                android:icon="@drawable/ic_menu_gallery"
+                android:id="@+id/nav_internacional"
+                android:icon="@drawable/ic_menu_send"
                 android:title="Internacional" />
             <item
-                android:id="@+id/nav_2"
-                android:icon="@drawable/ic_menu_gallery"
+                android:id="@+id/nav_nacional"
+                android:icon="@drawable/ic_menu_send"
                 android:title="Nacional" />
             <item
-                android:id="@+id/nav_3"
-                android:icon="@drawable/ic_menu_gallery"
+                android:id="@+id/nav_cdmx"
+                android:icon="@drawable/ic_menu_send"
                 android:title="CDMX" />
         </menu>
     </item>
@@ -21,28 +21,28 @@
     <item android:title="Categrorías">
         <menu>
             <item
-                android:id="@+id/nav_4"
-                android:icon="@drawable/ic_menu_gallery"
+                android:id="@+id/nav_politica"
+                android:icon="@drawable/ic_menu_send"
                 android:title="Política" />
             <item
-                android:id="@+id/nav_5"
-                android:icon="@drawable/ic_menu_gallery"
+                android:id="@+id/nav_economia"
+                android:icon="@drawable/ic_menu_send"
                 android:title="Economía" />
             <item
-                android:id="@+id/nav_6"
-                android:icon="@drawable/ic_menu_gallery"
+                android:id="@+id/nav_opinion"
+                android:icon="@drawable/ic_menu_send"
                 android:title="Opinión" />
             <item
-                android:id="@+id/nav_7"
-                android:icon="@drawable/ic_menu_gallery"
+                android:id="@+id/nav_tecnologia"
+                android:icon="@drawable/ic_menu_send"
                 android:title="Tecnología" />
             <item
-                android:id="@+id/nav_8"
-                android:icon="@drawable/ic_menu_gallery"
+                android:id="@+id/nav_cultura"
+                android:icon="@drawable/ic_menu_send"
                 android:title="Cultura" />
             <item
-                android:id="@+id/nav_9"
-                android:icon="@drawable/ic_menu_gallery"
+                android:id="@+id/nav_entretenimiento"
+                android:icon="@drawable/ic_menu_send"
                 android:title="Entretenimiento" />
         </menu>
     </item>

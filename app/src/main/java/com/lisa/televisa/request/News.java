@@ -29,8 +29,10 @@ public class News extends AsyncTask<String, String, String> {
     private Context context;
     private String url;
 
-    public News(String url, NewsListener newsListener){
-        this.url = url;
+    public News(Context context, String url, NewsListener newsListener){
+        this.context    = context;
+        this.url        = url;
+        this.listener   = newsListener;
     }
 
     @Override
@@ -50,13 +52,10 @@ public class News extends AsyncTask<String, String, String> {
                 .url(url)
                 .get()
                 .addHeader("content-type", "application/json")
-                .addHeader("cache-control", "no-cache")
-                .addHeader("postman-token", "490f6d86-1550-f624-d422-21cea2cbdbf5")
                 .build();
 
         Response response = null;
 
-        JSONObject jsonObject;
 
         try {
 
@@ -69,6 +68,8 @@ public class News extends AsyncTask<String, String, String> {
             try {
 
                 jsonData = response.body().string();
+                //Log.d(TAG, "Success Response: " + jsonData);
+                return jsonData;
 
             }catch (IOException e){
 
@@ -78,31 +79,26 @@ public class News extends AsyncTask<String, String, String> {
 
             }
 
-            Log.i(TAG, jsonData);
-
-            try {
-
-                JSONArray json = new JSONArray(jsonData);
-//                listener.onGetNews(json);
-            }catch (JSONException e){
-                e.printStackTrace();
-            }
-
-
-            return jsonData;
-
         }catch (IOException e){
             Log.e(TAG, e.getMessage());
             e.printStackTrace();
+
         }
 
         return null;
     }
 
+    protected void onPostExecute(String jsonArticles) {
+        if(jsonArticles == null)
+            listener.onGetNewsFaliure();
+        listener.onGetNews(jsonArticles);
+
+    }
+
 
     public interface NewsListener{
 
-        void onGetNews(JSONArray jsonArray);
+        void onGetNews(String jsonArticles);
         void onGetNewsFaliure();
     }
 
