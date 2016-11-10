@@ -103,12 +103,12 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.MyView
         });
 
 
-        String dateString = article.getDate_gmt();
+        //String dateString = article.getDate_gmt();
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z", new Locale("es","MX"));
+        //SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z", new Locale("es","MX"));
 
-        Date convertedDate = new Date();
-
+        //Date convertedDate = new Date();
+    /*
         try {
             convertedDate = dateFormat.parse(dateString);
 
@@ -116,8 +116,8 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.MyView
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-        holder.date.setText(convertedDate.toString());
+    */
+        holder.date.setText(article.getDate_gmt());
 
     }
 

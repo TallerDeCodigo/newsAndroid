@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -74,16 +75,16 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        getBreakingNews();
+       // getBreakingNews();
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        articleList  = new ArrayList<>();
-        adapter      = new ArticlesAdapter(this, articleList);
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(1, dpToPx(0), true));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(adapter);
+        //recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        //articleList  = new ArrayList<>();
+        //adapter      = new ArticlesAdapter(this, articleList);
+        //RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
+        //recyclerView.setLayoutManager(mLayoutManager);
+        //recyclerView.addItemDecoration(new GridSpacingItemDecoration(1, dpToPx(0), true));
+        //recyclerView.setItemAnimator(new DefaultItemAnimator());
+        //recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -121,39 +122,39 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+        displayView(item.getItemId());
+        return true;
+    }
+
+    public void displayView(int viewId) {
 
         Fragment fragment = null;
-        Class fragmentClass;
+        String title = getString(R.string.app_name);
 
-        int id = item.getItemId();
+        switch (viewId) {
+            case R.id.nav_cdmx:
+                fragment = new noticia();
+                title  = "News";
+                break;
 
-
-
-        if(id == R.id.nav_cdmx){
-            fragmentClass = noticia.class;
         }
 
+        Log.d(TAG, "HERE!");
 
-        //if (id == R.id.nav_camera) {
-            // Handle the camera action
-        //} else if (id == R.id.nav_gallery) {
+        if (fragment != null) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.flContent, fragment);
+            ft.commit();
+        }
 
-        //} else if (id == R.id.nav_slideshow) {
-
-        //} else if (id == R.id.nav_manage) {
-
-        //} else if (id == R.id.nav_share) {
-
-        //} else if (id == R.id.nav_send) {
-
-        //}
-
-        Log.d(TAG, "Menu Click");
+        // set the toolbar title
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(title);
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        return true;
+
     }
 
 
