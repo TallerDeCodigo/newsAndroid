@@ -9,4 +9,5 @@
     <color name="white">#FAFAFA</color>
     <color name="gray">#E0E0E0</color>
     <color name="black_overlay">#66000000</color>
+    <color name="transparent">#00000000</color>
 </resources>

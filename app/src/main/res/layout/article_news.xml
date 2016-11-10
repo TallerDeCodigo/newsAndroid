@@ -13,10 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="14dp"
         android:layout_marginRight="8dp"
-        card_view:cardCornerRadius="4dp"
-        android:layout_below="@+id/live_ad">
+        android:layout_marginBottom="3dp"
+        card_view:cardCornerRadius="4dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txtTitle"
-                android:textSize="16dp"
+                android:textSize="17dp"
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:layout_marginLeft="12dp"
@@ -52,6 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txtExcerpt"
+                android:textSize="15dp"
                 android:textColor="@color/black"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
@@ -64,21 +65,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txtTime"
-                android:textSize="10dp"
+                android:textSize="11dp"
                 android:layout_below="@+id/txtExcerpt"
-                android:layout_alignEnd="@+id/txtExcerpt"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginBottom="12dp"/>
 
-            <TextView
-                android:text="#TemaDelPost"
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/txtHashtag"
-                android:textSize="11dp"
-                android:textStyle="bold"
-                android:textColor="@color/blue"
-                android:layout_marginLeft="12dp"
-                android:layout_alignTop="@+id/txtTime" />
+                android:src="@drawable/ic_menu_share"
+                android:layout_alignBottom="@+id/txtTime"
+                android:layout_alignEnd="@+id/txtExcerpt"
+                android:id="@+id/share_btn" />
 
         </RelativeLayout>
 

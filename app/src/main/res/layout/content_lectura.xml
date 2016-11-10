@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.lisa.televisa.MainActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="260dp"
+                app:srcCompat="@color/blue"
+                android:id="@+id/imageView2"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="20dp"/>
+
+            <TextView
+                android:text="Lorem Ipsum Dolor Sit Amet, usado desde el año 1500."
+                android:textAlignment="textStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtTitle"
+                android:textSize="26dp"
+                android:textStyle="bold"
+                android:shadowColor="@color/black"
+                android:shadowDx="1.5"
+                android:shadowDy="1.5"
+                android:shadowRadius="1.5"
+                android:textColor="@color/white"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="15dp"
+                android:layout_alignBottom="@+id/imageView2"
+                android:layout_marginBottom="13dp" />
+
+            <TextView
+                android:text="Fuente: Noticieros Televisa  |  Agosto 12, 2016"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtTime"
+                android:textSize="11dp"
+                android:layout_below="@+id/imageView2"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp"/>
+
+
+            <TextView
+                android:text="Lorem Ipsum, usado desde el año 1500. El pasaje estándar Lorem Ipsum, usado desde el año 1500. Lorem Ipsum, usado desde el año 1500.\n\nLorem Ipsum, usado desde el año 1500. El pasaje estándar Lorem Ipsum, usado desde el año 1500. Lorem Ipsum, usado desde el año 1500.\n\nLorem Ipsum, usado desde el año 1500. El pasaje estándar Lorem Ipsum, usado desde el año 1500. Lorem Ipsum, usado desde el año 1500."
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtContent"
+                android:textColor="@color/black"
+                android:layout_marginLeft="16dp"
+                android:textSize="20dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="10dp"
+                android:layout_below="@+id/txtTime"
+                android:layout_centerHorizontal="true"
+                android:lineSpacingExtra="5dp"/>
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+</RelativeLayout>
