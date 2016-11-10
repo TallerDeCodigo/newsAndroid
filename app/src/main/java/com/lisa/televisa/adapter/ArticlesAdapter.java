@@ -18,7 +18,12 @@ import com.lisa.televisa.R;
 import com.lisa.televisa.Single;
 import com.lisa.televisa.model.Article;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by hever on 11/10/16.
@@ -30,15 +35,17 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.MyView
     private List<Article> newsList;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView title, excerpt;
+        public TextView title, excerpt, date;
         public ImageView thumbnail;
 
         public MyViewHolder(View view) {
             super(view);
 
-            title   = (TextView) view.findViewById(R.id.txtTitle);
-            excerpt = (TextView) view.findViewById(R.id.txtExcerpt);
-            thumbnail = (ImageView)  view.findViewById(R.id.imageView2);
+            title       = (TextView) view.findViewById(R.id.txtTitle);
+            excerpt     = (TextView) view.findViewById(R.id.txtExcerpt);
+            thumbnail   = (ImageView)  view.findViewById(R.id.imageView2);
+            date        = (TextView) view.findViewById(R.id.txtTime);
+
         }
     }
 
@@ -94,6 +101,23 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.MyView
                 ShareThis(article.getLink());
             }
         });
+
+
+        String dateString = article.getDate_gmt();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z", new Locale("es","MX"));
+
+        Date convertedDate = new Date();
+
+        try {
+            convertedDate = dateFormat.parse(dateString);
+
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        holder.date.setText(convertedDate.toString());
 
     }
 

@@ -34,6 +34,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import com.lisa.televisa.seccions.noticia;
 
@@ -188,7 +189,6 @@ public class MainActivity extends AppCompatActivity
                             String type             = jsonArray.getJSONObject(i).getString("type");
                             String _links           = jsonArray.getJSONObject(i).getString("_links");
 
-                            //featured_media          = helpers.getImageJSON(featured_media);
 
                             Article n = new Article(content, date_gmt, excerpt, featured_media, guid, id, link, modified, modified_gmt, slug, title, type, _links);
                             articleList.add(n);
