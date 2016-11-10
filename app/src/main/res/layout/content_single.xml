@@ -72,11 +72,12 @@
                 android:id="@+id/txtContent"
                 android:textColor="@color/black"
                 android:layout_marginLeft="15dp"
-                android:textSize="15dp"
+                android:textSize="20dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="10dp"
                 android:layout_below="@+id/txtTitle"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                android:lineSpacingExtra="5dp"/>
 
 
         </LinearLayout>

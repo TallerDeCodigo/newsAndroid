@@ -36,10 +36,12 @@ public class Single extends AppCompatActivity {
 
         String title    = "";
         String content  = "";
+        String image    = "";
 
         if (extras != null) {
             title   = extras.getString("title");
             content = extras.getString("content");
+            image   = extras.getString("image");
         }
 
         txtTitle.setText(Html.fromHtml(title));
@@ -57,7 +59,7 @@ public class Single extends AppCompatActivity {
 
 
 
-        Glide.with(getApplicationContext()).load("http://televisa.news/wp-content/uploads/2016/11/clinton_preventaja.jpg").into(thumbnail);
+        Glide.with(getApplicationContext()).load(image).into(thumbnail);
 
 
     }

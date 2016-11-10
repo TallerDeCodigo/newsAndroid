@@ -5,6 +5,8 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,7 +21,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -30,9 +31,12 @@ import com.lisa.televisa.utils.Helpers;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.lisa.televisa.seccions.noticia;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -118,12 +122,17 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
 
+        Fragment fragment = null;
+        Class fragmentClass;
+
         int id = item.getItemId();
 
 
-        if(id == R.id.nav_cdmx){
 
+        if(id == R.id.nav_cdmx){
+            fragmentClass = noticia.class;
         }
+
 
         //if (id == R.id.nav_camera) {
             // Handle the camera action
@@ -196,7 +205,7 @@ public class MainActivity extends AppCompatActivity
                     e.printStackTrace();
                 }
 
-                adapter.notifyDataSetChanged();
+                setImagesIntoModel(articleList);
             }
 
             @Override
@@ -210,8 +219,52 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    public void setImagesIntoModel(Article articleList){
+    public void setImagesIntoModel(List<Article> articleList){
 
+        helpers = new Helpers();
+
+        for (int i=0; i<articleList.size(); i++) {
+
+            final Article article = articleList.get(i);
+
+            String url = "https://televisa.news/wp-json/wp/v2/media/" + article.getFeatured_media();
+
+            newsRequest = new News(getApplicationContext(),url , new News.NewsListener() {
+
+                String urlImage = "";
+
+                @Override
+                public void onGetNews(String jsonArticles) {
+                    try {
+
+                        JSONObject jsonObject = new JSONObject(jsonArticles);
+
+                        try {
+
+                            urlImage   = jsonObject.getString("source_url");
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+
+                    }catch (JSONException e){
+                        e.printStackTrace();
+                    }
+                    article.setFeatured_media(urlImage);
+                }
+
+                @Override
+                public void onGetNewsFaliure() {
+                    Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                }
+            });
+            newsRequest.execute();
+        }
+
+        adapter.notifyDataSetChanged();
     }
 
     /**
@@ -259,4 +312,6 @@ public class MainActivity extends AppCompatActivity
         Resources r = getResources();
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
+
+
 }
