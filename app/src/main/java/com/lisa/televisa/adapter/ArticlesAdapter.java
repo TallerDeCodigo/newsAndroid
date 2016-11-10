@@ -79,22 +79,36 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.MyView
 
                 intent.putExtra("title", article.getTitle());
                 intent.putExtra("content", article.getContent());
+                intent.putExtra("image",article.getFeatured_media());
 
                 mContext.startActivity(intent);
 
             }
         });
 
-        // loading album cover using Glide library
+        Glide.with(mContext).load(article.getFeatured_media()).into(holder.thumbnail);
 
-
-        Glide.with(mContext).load("http://televisa.news/wp-content/uploads/2016/11/clinton_preventaja.jpg").into(holder.thumbnail);
+        holder.excerpt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShareThis(article.getLink());
+            }
+        });
 
     }
 
     @Override
     public int getItemCount() {
         return newsList.size();
+    }
+
+    public void ShareThis(String message)
+    {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+        sendIntent.setType("text/plain");
+        mContext.startActivity(Intent.createChooser(sendIntent, "Compartir"));
     }
 
 }

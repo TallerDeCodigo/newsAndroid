@@ -31,6 +31,7 @@ import com.lisa.televisa.utils.Helpers;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -133,9 +134,6 @@ public class MainActivity extends AppCompatActivity
         }
 
 
-        
-
-
         //if (id == R.id.nav_camera) {
             // Handle the camera action
         //} else if (id == R.id.nav_gallery) {
@@ -207,7 +205,7 @@ public class MainActivity extends AppCompatActivity
                     e.printStackTrace();
                 }
 
-                adapter.notifyDataSetChanged();
+                setImagesIntoModel(articleList);
             }
 
             @Override
@@ -221,8 +219,52 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    public void setImagesIntoModel(Article articleList){
+    public void setImagesIntoModel(List<Article> articleList){
 
+        helpers = new Helpers();
+
+        for (int i=0; i<articleList.size(); i++) {
+
+            final Article article = articleList.get(i);
+
+            String url = "https://televisa.news/wp-json/wp/v2/media/" + article.getFeatured_media();
+
+            newsRequest = new News(getApplicationContext(),url , new News.NewsListener() {
+
+                String urlImage = "";
+
+                @Override
+                public void onGetNews(String jsonArticles) {
+                    try {
+
+                        JSONObject jsonObject = new JSONObject(jsonArticles);
+
+                        try {
+
+                            urlImage   = jsonObject.getString("source_url");
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+
+                    }catch (JSONException e){
+                        e.printStackTrace();
+                    }
+                    article.setFeatured_media(urlImage);
+                }
+
+                @Override
+                public void onGetNewsFaliure() {
+                    Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                }
+            });
+            newsRequest.execute();
+        }
+
+        adapter.notifyDataSetChanged();
     }
 
     /**
@@ -270,4 +312,6 @@ public class MainActivity extends AppCompatActivity
         Resources r = getResources();
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
+
+
 }
