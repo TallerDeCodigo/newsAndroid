@@ -32,7 +32,7 @@ public class Splash2 extends AppCompatActivity {
             public void run() {
                 try {
                     synchronized (this) {
-
+                    /*
                         newsRequest = new News("https://www.televisa.news/wp-json/wp/v2/breaking", new News.NewsListener() {
 
                             @Override
@@ -49,7 +49,7 @@ public class Splash2 extends AppCompatActivity {
                         });
 
                         newsRequest.execute();
-
+                    */
                         wait(3000);
 
                     }
