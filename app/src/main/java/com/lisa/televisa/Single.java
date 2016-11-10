@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.text.Spanned;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -42,7 +43,19 @@ public class Single extends AppCompatActivity {
         }
 
         txtTitle.setText(Html.fromHtml(title));
-        txtContent.setText(Html.fromHtml(content));
+
+        Spanned result;
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            result = Html.fromHtml(content,Html.FROM_HTML_MODE_LEGACY);
+        } else {
+            result = Html.fromHtml(content);
+        }
+
+        txtContent.setText(result);
+
+
+
 
         Glide.with(getApplicationContext()).load("http://televisa.news/wp-content/uploads/2016/11/clinton_preventaja.jpg").into(thumbnail);
 

@@ -71,8 +71,6 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.MyView
 
         holder.excerpt.setText(result);
 
-        Glide.with(mContext).load("http://televisa.news/wp-content/uploads/2016/11/clinton_preventaja.jpg").into(holder.thumbnail);
-
         holder.thumbnail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,7 +88,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.MyView
         // loading album cover using Glide library
 
 
-
+        Glide.with(mContext).load("http://televisa.news/wp-content/uploads/2016/11/clinton_preventaja.jpg").into(holder.thumbnail);
 
     }
 

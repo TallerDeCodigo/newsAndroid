@@ -209,6 +209,11 @@ public class MainActivity extends AppCompatActivity
         newsRequest.execute();
     }
 
+
+    public void setImagesIntoModel(Article articleList){
+
+    }
+
     /**
      * RecyclerView item decoration - give equal margin around grid item
      */
