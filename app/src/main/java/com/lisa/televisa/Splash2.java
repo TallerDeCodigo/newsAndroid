@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import com.lisa.televisa.request.News;
 
@@ -15,10 +18,15 @@ public class Splash2 extends AppCompatActivity {
     public News newsRequest;
     public static final String TAG = Splash2.class.getName();
 
+    public ImageView appIcon;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash2);
+
+        appIcon = (ImageView)findViewById(R.id.appIcon);
+
         Thread mSplashThread = new Thread() {
             @Override
             public void run() {
