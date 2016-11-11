@@ -13,7 +13,6 @@ public class NewsData {
 
     public static final String PREF_NAME                 = "NEWS_NOTIFICATIONS";
     public static final String ID_PUBLICATIONS           = "POSTID";
-
     public static final String PUSH_INTERNACIONAL        = "INTERNACIONAL";         //1
     public static final String PUSH_NACIONAL             = "NACIONAL";              //2
     public static final String PUSH_CDMX                 = "CDMX";                  //3
@@ -41,6 +40,11 @@ public class NewsData {
         editor.putInt(seccion, activo);
         editor.commit();
 
+    }
+
+    public void setPostID(String postID){
+        editor.putString(ID_PUBLICATIONS, postID);
+        editor.commit();
     }
 
     /* REGISTRO DE LAS OPCIONES DE PUSH */
