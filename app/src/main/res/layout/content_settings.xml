@@ -32,7 +32,7 @@
                 android:textSize="15dp"
                 android:textAlignment="center"
                 android:textStyle="italic"
-                android:layout_marginBottom="5dp"/>
+                android:layout_marginBottom="7dp"/>
 
             <TextView
                 android:layout_width="match_parent"

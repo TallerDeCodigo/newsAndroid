@@ -127,7 +127,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.MyView
             e.printStackTrace();
         }
 
-        holder.date.setText(datetime);
+        holder.date.setText(datetime.substring(0, 1).toUpperCase() + datetime.substring(1));
 
     }
 
