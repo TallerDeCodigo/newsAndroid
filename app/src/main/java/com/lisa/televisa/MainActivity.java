@@ -28,6 +28,7 @@ import com.bumptech.glide.Glide;
 import com.lisa.televisa.adapter.ArticlesAdapter;
 import com.lisa.televisa.model.Article;
 import com.lisa.televisa.request.News;
+import com.lisa.televisa.seccions.BreakingNews;
 import com.lisa.televisa.utils.Helpers;
 
 import org.json.JSONArray;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity
     private List<Article> articleList;
     public News newsRequest;
     public Helpers helpers;
+    private boolean viewIsAtHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,16 +77,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-       // getBreakingNews();
-
-        //recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        //articleList  = new ArrayList<>();
-        //adapter      = new ArticlesAdapter(this, articleList);
-        //RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
-        //recyclerView.setLayoutManager(mLayoutManager);
-        //recyclerView.addItemDecoration(new GridSpacingItemDecoration(1, dpToPx(0), true));
-        //recyclerView.setItemAnimator(new DefaultItemAnimator());
-        //recyclerView.setAdapter(adapter);
+        displayView(0);
     }
 
     @Override
@@ -132,14 +125,17 @@ public class MainActivity extends AppCompatActivity
         String title = getString(R.string.app_name);
 
         switch (viewId) {
+
+            case 0:
+                fragment = new BreakingNews();
+                viewIsAtHome = true;
+                break;
             case R.id.nav_cdmx:
                 fragment = new noticia();
-                title  = "News";
+                viewIsAtHome = false;
                 break;
 
         }
-
-        Log.d(TAG, "HERE!");
 
         if (fragment != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -156,163 +152,4 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
 
     }
-
-
-    public void getBreakingNews(){
-
-        helpers = new Helpers();
-
-        newsRequest = new News(getApplicationContext(), "https://www.televisa.news/wp-json/wp/v2/noticia", new News.NewsListener() {
-
-            @Override
-            public void onGetNews(String json) {
-
-                try {
-
-                    JSONArray jsonArray = new JSONArray(json);
-
-                    for (int i = 0; i < jsonArray.length(); i++) {
-
-                        try {
-
-                            String content          = jsonArray.getJSONObject(i).getJSONObject("content").getString("rendered");
-                            String date_gmt         = jsonArray.getJSONObject(i).getString("date_gmt");
-                            String excerpt          = jsonArray.getJSONObject(i).getJSONObject("excerpt").getString("rendered");
-                            String featured_media   = jsonArray.getJSONObject(i).getString("featured_media");
-                            String guid             = jsonArray.getJSONObject(i).getString("guid");
-                            int id                  = 0;
-                            String link             = jsonArray.getJSONObject(i).getString("link");
-                            String modified         = jsonArray.getJSONObject(i).getString("modified");
-                            String modified_gmt     = jsonArray.getJSONObject(i).getString("modified_gmt");
-                            String slug             = jsonArray.getJSONObject(i).getString("slug");
-                            String title            = jsonArray.getJSONObject(i).getJSONObject("title").getString("rendered");
-
-                            String type             = jsonArray.getJSONObject(i).getString("type");
-                            String _links           = jsonArray.getJSONObject(i).getString("_links");
-
-
-                            Article n = new Article(content, date_gmt, excerpt, featured_media, guid, id, link, modified, modified_gmt, slug, title, type, _links);
-                            articleList.add(n);
-
-                            Log.d(TAG, featured_media);
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                }catch (JSONException e){
-                    e.printStackTrace();
-                }
-
-                setImagesIntoModel(articleList);
-            }
-
-            @Override
-            public void onGetNewsFaliure() {
-
-                Toast.makeText(MainActivity.this, "Error en la carga de las noticias", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        newsRequest.execute();
-    }
-
-
-    public void setImagesIntoModel(List<Article> articleList){
-
-        helpers = new Helpers();
-
-        for (int i=0; i<articleList.size(); i++) {
-
-            final Article article = articleList.get(i);
-
-            String url = "https://televisa.news/wp-json/wp/v2/media/" + article.getFeatured_media();
-
-            newsRequest = new News(getApplicationContext(),url , new News.NewsListener() {
-
-                String urlImage = "";
-
-                @Override
-                public void onGetNews(String jsonArticles) {
-                    try {
-
-                        JSONObject jsonObject = new JSONObject(jsonArticles);
-
-                        try {
-
-                            urlImage   = jsonObject.getString("source_url");
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-
-
-                    }catch (JSONException e){
-                        e.printStackTrace();
-                    }
-                    article.setFeatured_media(urlImage);
-                }
-
-                @Override
-                public void onGetNewsFaliure() {
-                    Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
-                }
-            });
-            newsRequest.execute();
-        }
-
-        adapter.notifyDataSetChanged();
-    }
-
-    /**
-     * RecyclerView item decoration - give equal margin around grid item
-     */
-    public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
-
-        private int spanCount;
-        private int spacing;
-        private boolean includeEdge;
-
-        public GridSpacingItemDecoration(int spanCount, int spacing, boolean includeEdge) {
-            this.spanCount = spanCount;
-            this.spacing = spacing;
-            this.includeEdge = includeEdge;
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            int position = parent.getChildAdapterPosition(view); // item position
-            int column = position % spanCount; // item column
-
-            if (includeEdge) {
-                outRect.left = spacing - column * spacing / spanCount; // spacing - column * ((1f / spanCount) * spacing)
-                outRect.right = (column + 1) * spacing / spanCount; // (column + 1) * ((1f / spanCount) * spacing)
-
-                if (position < spanCount) { // top edge
-                    outRect.top = spacing;
-                }
-                outRect.bottom = spacing; // item bottom
-            } else {
-                outRect.left = column * spacing / spanCount; // column * ((1f / spanCount) * spacing)
-                outRect.right = spacing - (column + 1) * spacing / spanCount; // spacing - (column + 1) * ((1f /    spanCount) * spacing)
-                if (position >= spanCount) {
-                    outRect.top = spacing; // item top
-                }
-            }
-        }
-    }
-
-    /**
-     * Converting dp to pixel
-     */
-    private int dpToPx(int dp) {
-        Resources r = getResources();
-        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
-    }
-
-
 }

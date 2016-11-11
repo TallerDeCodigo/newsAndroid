@@ -3,20 +3,17 @@ package com.lisa.televisa.seccions;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Rect;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.ViewGroup;
 import android.view.View;
-import android.widget.Toast;
+import android.view.ViewGroup;
 
-import com.lisa.televisa.MainActivity;
 import com.lisa.televisa.R;
 import com.lisa.televisa.adapter.ArticlesAdapter;
 import com.lisa.televisa.model.Article;
@@ -30,7 +27,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class noticia extends Fragment {
+/**
+ * Created by hever on 11/10/16.
+ */
+
+public class BreakingNews extends Fragment {
 
     public static final String TAG = noticia.class.getName();
     private RecyclerView recyclerView;
@@ -39,7 +40,7 @@ public class noticia extends Fragment {
     public News newsRequest;
     public Helpers helpers;
 
-    public noticia() {
+    public BreakingNews() {
         // Required empty public constructor
     }
 
@@ -61,7 +62,7 @@ public class noticia extends Fragment {
         adapter      = new ArticlesAdapter(getContext(), articleList);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 1);
         recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(1, dpToPx(0), true));
+        recyclerView.addItemDecoration(new BreakingNews.GridSpacingItemDecoration(1, dpToPx(0), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
 
@@ -83,7 +84,7 @@ public class noticia extends Fragment {
 
         helpers = new Helpers();
 
-        newsRequest = new News(getContext(), "https://www.televisa.news/wp-json/wp/v2/noticia", new News.NewsListener() {
+        newsRequest = new News(getContext(), "https://www.televisa.news/wp-json/wp/v2/breaking", new News.NewsListener() {
 
             @Override
             public void onGetNews(String json) {

@@ -4,6 +4,11 @@
     <item android:title="Tópicos">
         <menu>
             <item
+                android:id="@+id/nav_breaking"
+                android:icon="@drawable/ic_internacional"
+                android:title="Breaking"
+                android:visible="false"/>
+            <item
                 android:id="@+id/nav_internacional"
                 android:icon="@drawable/ic_internacional"
                 android:title="Internacional" />
