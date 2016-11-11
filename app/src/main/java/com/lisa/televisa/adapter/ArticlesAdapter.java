@@ -125,7 +125,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.MyView
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        
+
         holder.date.setText(datetime);
 
     }
