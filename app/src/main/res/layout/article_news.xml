@@ -22,16 +22,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/blue"
+                android:id="@+id/img_frame"
+                android:layout_height="185dp"
+                android:background="@color/gray"
                 android:layout_alignParentTop="true"
-                android:id="@+id/imageView2"
-                android:src="@drawable/logo2"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginBottom="10dp"/>
+                android:layout_marginBottom="10dp">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:src="@drawable/no_thumb"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    />
+
+            </LinearLayout>
 
             <TextView
                 android:text="Nueva York, dividido por simpatizantes y opositores de Trump"
@@ -45,7 +54,7 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:layout_marginBottom="5dp"
-                android:layout_below="@+id/imageView2" />
+                android:layout_below="@+id/img_frame" />
 
             <TextView
                 android:text="La Torre Trump, en Nueva York, fue punto de reunión de manifestantes que expresaron su apoyo u odio hacia Donald Trump."
