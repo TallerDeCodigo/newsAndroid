@@ -1,5 +1,6 @@
 package com.lisa.televisa;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -48,6 +49,8 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     private boolean viewIsAtHome;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     public NewsData newsdate;
+    public static Activity activity;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,14 +106,27 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                     // new push notification is received
 
                     String message = intent.getStringExtra("message");
+                    String postID = intent.getStringExtra("postID");
 
                     Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Push notification: " + postID, Toast.LENGTH_LONG).show();
 
                 }
             }
         };
 
         displayFirebaseRegId();
+
+
+        if(newsdate.getPostID() != ""){
+
+
+            Log.d(TAG, "ID POST: " + newsdate.getPostID());
+            Intent i = new Intent(this, Single.class);
+            startActivity(i);
+
+            
+        }
     }
 
     @Override
