@@ -17,14 +17,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="260dp"
-                app:srcCompat="@color/blue"
-                android:id="@+id/imageView2"
+                android:id="@+id/img_frame"
+                android:layout_height="280dp"
+                android:background="@color/gray"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginBottom="20dp"/>
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="17dp">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:src="@drawable/no_thumb"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:scaleType="centerCrop"
+                    />
+
+            </LinearLayout>
 
             <TextView
                 android:text="Lorem Ipsum Dolor Sit Amet, usado desde el año 1500."
@@ -41,7 +52,7 @@
                 android:textColor="@color/white"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="15dp"
-                android:layout_alignBottom="@+id/imageView2"
+                android:layout_alignBottom="@+id/img_frame"
                 android:layout_marginBottom="13dp" />
 
             <TextView
@@ -50,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/txtTime"
                 android:textSize="11dp"
-                android:layout_below="@+id/imageView2"
+                android:layout_below="@+id/img_frame"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="15dp"/>
