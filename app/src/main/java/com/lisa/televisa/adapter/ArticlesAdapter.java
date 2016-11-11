@@ -115,22 +115,19 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.MyView
             }
         });
 
+        String datetime = "";
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        SimpleDateFormat dateformat = new SimpleDateFormat("MMMM dd, yyyy");
 
-        //String dateString = article.getDate_gmt();
-
-        //SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z", new Locale("es","MX"));
-
-        //Date convertedDate = new Date();
-    /*
         try {
-            convertedDate = dateFormat.parse(dateString);
-
+            Date date = format.parse(article.getDate_gmt());
+            datetime = dateformat.format(date);
         } catch (ParseException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-    */
-        holder.date.setText(article.getDate_gmt());
+
+        holder.date.setText(datetime);
 
     }
 
