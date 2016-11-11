@@ -36,7 +36,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.MyView
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, excerpt, date;
-        public ImageView thumbnail;
+        public ImageView thumbnail, share;
 
         public MyViewHolder(View view) {
             super(view);
@@ -45,6 +45,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.MyView
             excerpt     = (TextView) view.findViewById(R.id.txtExcerpt);
             thumbnail   = (ImageView)  view.findViewById(R.id.imageView2);
             date        = (TextView) view.findViewById(R.id.txtTime);
+            share       = (ImageView) view.findViewById(R.id.share_btn);
 
         }
     }
@@ -68,17 +69,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.MyView
         final Article article = newsList.get(position);
         holder.title.setText(article.getTitle());
 
-        Spanned result;
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            result = Html.fromHtml(article.getExcerpt(),Html.FROM_HTML_MODE_LEGACY);
-        } else {
-            result = Html.fromHtml(article.getExcerpt());
-        }
-
-        holder.excerpt.setText(result);
-
-        holder.thumbnail.setOnClickListener(new View.OnClickListener() {
+        holder.title.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
 
@@ -93,9 +84,30 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.MyView
             }
         });
 
-        Glide.with(mContext).load(article.getFeatured_media()).into(holder.thumbnail);
+        Spanned result;
 
-        holder.excerpt.setOnClickListener(new View.OnClickListener() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            result = Html.fromHtml(article.getExcerpt(),Html.FROM_HTML_MODE_LEGACY);
+        } else {
+            result = Html.fromHtml(article.getExcerpt());
+        }
+
+        holder.excerpt.setText(result);
+
+        holder.thumbnail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, Single.class);
+                intent.putExtra("title", article.getTitle());
+                intent.putExtra("content", article.getContent());
+                intent.putExtra("image",article.getFeatured_media());
+                mContext.startActivity(intent);
+            }
+        });
+
+        Glide.with(mContext).load(article.getFeatured_media()).fitCenter().into(holder.thumbnail);
+
+        holder.share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ShareThis(article.getLink());

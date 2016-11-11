@@ -10,4 +10,11 @@
     <string name="title_activity_onlive">Onlive</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <!-- A sample Brightcove Edge Account ID -->
+    <string name="account">74091787001</string>
+
+    <!-- A sample Brightcove Edge Policy Key -->
+    <string name="policy">8bWA4oEhAPu4LuVE4i1xmYafxgUEj4pz9WZlr-u65KTvrflINcU6lVixz5jw_sbFX2EkHCQ5RupFRiXERo123g</string>
+
 </resources>
