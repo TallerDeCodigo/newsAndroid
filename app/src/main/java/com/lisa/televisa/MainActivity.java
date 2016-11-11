@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.lisa.televisa.adapter.ArticlesAdapter;
 import com.lisa.televisa.model.Article;
+import com.lisa.televisa.persistence.NewsData;
 import com.lisa.televisa.request.News;
 import com.lisa.televisa.seccions.BreakingNews;
 import com.lisa.televisa.utils.Helpers;
@@ -41,12 +42,12 @@ import java.util.List;
 import com.lisa.televisa.seccions.noticia;
 
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final String TAG = MainActivity.class.getName();
     private boolean viewIsAtHome;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
+    public NewsData newsdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +56,23 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        newsdate = new NewsData(getApplicationContext());
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+               /* Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent i = new Intent(getApplicationContext(), Single.class);
+                                getApplication().startActivity(i);
+                            }
+                        }).show();*/
+                Intent i = new Intent(getApplicationContext(), Onlive.class);
+                getApplication().startActivity(i);
+
             }
         });
 
