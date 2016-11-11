@@ -26,7 +26,7 @@ public class Single extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.content_lectura);
+        setContentView(R.layout.app_bar_single);
 
         txtTitle    = (TextView) findViewById(R.id.txtTitle);
         txtContent  = (TextView) findViewById(R.id.txtContent);
