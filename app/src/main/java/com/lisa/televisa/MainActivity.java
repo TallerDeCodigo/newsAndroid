@@ -108,8 +108,8 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                     String message = intent.getStringExtra("message");
                     String postID = intent.getStringExtra("postID");
 
-                    Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
-                    Toast.makeText(getApplicationContext(), "Push notification: " + postID, Toast.LENGTH_LONG).show();
+                    //Intent i = new Intent(getApplicationContext(), Single.class);
+                    //getApplication().startActivity(i);
 
                 }
             }
@@ -120,12 +120,11 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
         if(newsdate.getPostID() != ""){
 
-
             Log.d(TAG, "ID POST: " + newsdate.getPostID());
             Intent i = new Intent(this, Single.class);
             startActivity(i);
 
-            
+
         }
     }
 
@@ -161,6 +160,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
             return true;
         }
 
@@ -241,5 +241,13 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     protected void onPause() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
         super.onPause();
+    }
+
+    public void getSingleItemPost()
+    {
+        String idPost = newsdate.getPostID();
+
+        Intent i = new Intent(getApplicationContext(), Single.class);
+        getApplication().startActivity(i);
     }
 }
