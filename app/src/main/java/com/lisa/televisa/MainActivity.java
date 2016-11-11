@@ -85,8 +85,14 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        } /*else {
             super.onBackPressed();
+        } */
+
+        if (!viewIsAtHome) { //if the current view is not the News fragment
+            displayView(0); //display the News fragment
+        } else {
+            moveTaskToBack(true);  //If view is in News fragment, exit application
         }
     }
 
