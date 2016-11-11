@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:id="@+id/img_frame"
                 android:layout_height="185dp"
@@ -33,14 +33,22 @@
                 android:layout_marginBottom="10dp">
 
                 <ImageView
-                    android:id="@+id/imageView2"
-                    android:src="@drawable/no_thumb"
+                    android:id="@+id/imageView_bkg"
+                    android:src="@drawable/bkg_thumb"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:scaleType="centerCrop"
                     />
 
-            </LinearLayout>
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:src="@drawable/bkg_thumb"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:scaleType="centerCrop"
+                    />
+
+            </RelativeLayout>
 
             <TextView
                 android:text="Nueva York, dividido por simpatizantes y opositores de Trump"
