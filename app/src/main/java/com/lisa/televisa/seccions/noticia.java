@@ -70,7 +70,7 @@ public class noticia extends Fragment {
         // Inflate the layout for this fragment
 
         try {
-            Glide.with(this).load(R.drawable.no_thumb).into((ImageView) rootView.findViewById(R.id.imageView2));
+            Glide.with(this).load(R.drawable.bkg_thumb).into((ImageView) rootView.findViewById(R.id.imageView2));
         } catch (Exception e) {
             e.printStackTrace();
         }
