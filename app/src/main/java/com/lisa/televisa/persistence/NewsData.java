@@ -11,21 +11,43 @@ import com.lisa.televisa.model.Article;
 
 public class NewsData {
 
-    public static final String PREF_NAME = "NEWS_NOTIFICATIONS";
-    public static final String ID_PUBLICATIONS = "POSTID";
+    public static final String PREF_NAME                 = "NEWS_NOTIFICATIONS";
+    public static final String ID_PUBLICATIONS           = "POSTID";
+
+    public static final String PUSH_INTERNACIONAL        = "INTERNACIONAL";         //1
+    public static final String PUSH_NACIONAL             = "NACIONAL";              //2
+    public static final String PUSH_CDMX                 = "CDMX";                  //3
+    public static final String PUSH_POLITICA             = "POLITICA";              //4
+    public static final String PUSH_ECONOMIA             = "ECONOMIA";              //5
+    public static final String PUSH_OPINION              = "OPINION";               //6
+    public static final String PUSH_CIENCIAYTECNOLOGIA   = "CIENCIAYTECNOLOGIA";    //7
+    public static final String PUSH_CULTURA              = "CULTURA";               //8
+    public static final String PUSH_DEPORTES             = "DEPORTES";              //9
+    public static final String PUSH_ENTRETENIMIENTO      = "ENTRETENIMIENTO";       //10
+    public static final String PUSH_VIDAYESTILO          = "VIDAYESTILO";           //11
 
     private SharedPreferences manager;
     private SharedPreferences.Editor editor;
 
-    public NewsData(Context context){
+    public NewsData(Context context)
+    {
         manager = context.getSharedPreferences(PREF_NAME, 0);
         editor = manager.edit();
     }
 
-    public void notificationSave(String POSTID){
+    public void notificationSave(String seccion, int activo)
+    {
 
-        editor.putString(ID_PUBLICATIONS, POSTID);
+        editor.putInt(seccion, activo);
         editor.commit();
+
+    }
+
+    /* REGISTRO DE LAS OPCIONES DE PUSH */
+
+    public int getNotificationON(String seccion){
+
+        return manager.getInt(seccion, 0);
 
     }
 
