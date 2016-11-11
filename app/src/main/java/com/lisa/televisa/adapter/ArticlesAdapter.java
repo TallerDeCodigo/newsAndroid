@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.lisa.televisa.R;
 import com.lisa.televisa.Single;
 import com.lisa.televisa.model.Article;
@@ -105,7 +106,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.MyView
             }
         });
 
-        Glide.with(mContext).load(article.getFeatured_media()).fitCenter().into(holder.thumbnail);
+        Glide.with(mContext).load(article.getFeatured_media()).fitCenter().diskCacheStrategy(DiskCacheStrategy.SOURCE ).into(holder.thumbnail);
 
         holder.share.setOnClickListener(new View.OnClickListener() {
             @Override

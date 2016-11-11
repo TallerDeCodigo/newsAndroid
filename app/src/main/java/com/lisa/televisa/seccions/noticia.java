@@ -14,8 +14,10 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.lisa.televisa.MainActivity;
 import com.lisa.televisa.R;
 import com.lisa.televisa.adapter.ArticlesAdapter;
@@ -66,6 +68,13 @@ public class noticia extends Fragment {
         recyclerView.setAdapter(adapter);
 
         // Inflate the layout for this fragment
+
+        try {
+            Glide.with(this).load(R.drawable.no_thumb).into((ImageView) rootView.findViewById(R.id.imageView2));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return rootView;
     }
 

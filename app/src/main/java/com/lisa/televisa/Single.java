@@ -26,7 +26,7 @@ public class Single extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.content_single);
+        setContentView(R.layout.content_lectura);
 
         txtTitle    = (TextView) findViewById(R.id.txtTitle);
         txtContent  = (TextView) findViewById(R.id.txtContent);
@@ -55,9 +55,6 @@ public class Single extends AppCompatActivity {
         }
 
         txtContent.setText(result);
-
-
-
 
         Glide.with(getApplicationContext()).load(image).into(thumbnail);
 
