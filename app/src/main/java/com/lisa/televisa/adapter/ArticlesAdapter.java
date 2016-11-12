@@ -79,6 +79,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.MyView
                 intent.putExtra("title", article.getTitle());
                 intent.putExtra("content", article.getContent());
                 intent.putExtra("image",article.getFeatured_media());
+                intent.putExtra("date",article.getDate_gmt());
 
                 mContext.startActivity(intent);
 
@@ -102,6 +103,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.MyView
                 intent.putExtra("title", article.getTitle());
                 intent.putExtra("content", article.getContent());
                 intent.putExtra("image",article.getFeatured_media());
+                intent.putExtra("date",article.getDate_gmt());
                 mContext.startActivity(intent);
             }
         });
