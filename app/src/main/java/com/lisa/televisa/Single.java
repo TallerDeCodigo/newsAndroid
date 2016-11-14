@@ -79,7 +79,7 @@ public class Single extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        date.setText("Fuente Noticioeros Televisa  |  " + time.substring(0, 1).toUpperCase() + time.substring(1));
+        date.setText("Fuente Noticieros Televisa  |  " + time.substring(0, 1).toUpperCase() + time.substring(1));
 
         txtTitle.setText(Html.fromHtml(title));
 
@@ -100,7 +100,7 @@ public class Single extends AppCompatActivity {
             setSupportActionBar(toolbar);
         }
 
-        getSupportActionBar().setTitle(Html.fromHtml(title));
+        getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 

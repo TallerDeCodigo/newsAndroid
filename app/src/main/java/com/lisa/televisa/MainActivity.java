@@ -9,6 +9,8 @@ import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -64,7 +66,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     private boolean viewIsAtHome;
     private int viewCurret;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
-    public NewsData newsdate;
+    public NewsData newsData;
     public static Activity activity;
 
 
@@ -75,7 +77,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        newsdate = new NewsData(getApplicationContext());
+        newsData = new NewsData(getApplicationContext());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setBackgroundTintList(new ColorStateList(new int[][]{new int[]{0}}, new int[]{black}));
@@ -115,7 +117,39 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 if (intent.getAction().equals(Config.REGISTRATION_COMPLETE)) {
                     // gcm successfully registered
                     // now subscribe to `global` topic to receive app wide notifications
+
                     FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+                    if(newsData.getNotificationON(newsData.PUSH_INTERNACIONAL).equals("1"))
+                        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_INT);
+                    if(newsData.getNotificationON(newsData.PUSH_NACIONAL).equals("1"))
+                        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_NAC);
+                    if(newsData.getNotificationON(newsData.PUSH_CDMX).equals("1"))
+                        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_CDMX);
+
+                    /*
+                    if(newsData.getNotificationON(newsData.PUSH_INTERNACIONAL).equals("1"))
+                        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+                    if(newsData.getNotificationON(newsData.PUSH_INTERNACIONAL).equals("1"))
+                        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+                    if(newsData.getNotificationON(newsData.PUSH_INTERNACIONAL).equals("1"))
+                        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+                    if(newsData.getNotificationON(newsData.PUSH_INTERNACIONAL).equals("1"))
+                        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+                    if(newsData.getNotificationON(newsData.PUSH_INTERNACIONAL).equals("1"))
+                        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+                    if(newsData.getNotificationON(newsData.PUSH_INTERNACIONAL).equals("1"))
+                        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+                    if(newsData.getNotificationON(newsData.PUSH_INTERNACIONAL).equals("1"))
+                        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+                    if(newsData.getNotificationON(newsData.PUSH_INTERNACIONAL).equals("1"))
+                        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+                    if(newsData.getNotificationON(newsData.PUSH_INTERNACIONAL).equals("1"))
+                        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+                    if(newsData.getNotificationON(newsData.PUSH_INTERNACIONAL).equals("1"))
+                        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+                    if(newsData.getNotificationON(newsData.PUSH_INTERNACIONAL).equals("1"))
+                        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+                    */
 
                     displayFirebaseRegId();
 
@@ -336,9 +370,10 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
     public void getSingleItemPost()
     {
-        String idPost = newsdate.getPostID();
+        String idPost = newsData.getPostID();
 
         Intent i = new Intent(getApplicationContext(), Single.class);
         getApplication().startActivity(i);
     }
+
 }

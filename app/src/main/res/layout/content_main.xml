@@ -17,7 +17,8 @@
         android:layout_width="match_parent"
         android:id="@+id/live_ad"
         android:layout_height="35dp"
-        android:background="@color/yellow">
+        android:background="@color/yellow"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="70dp"
@@ -79,6 +80,5 @@
         android:scrollbars="vertical"
         android:layout_below="@+id/live_ad"
         android:layout_alignParentStart="true" />
-
 
 </RelativeLayout>

@@ -26,6 +26,7 @@ public class NewsData {
     public static final String PUSH_DEPORTES             = "DEPORTES";              //9
     public static final String PUSH_ENTRETENIMIENTO      = "ENTRETENIMIENTO";       //10
     public static final String PUSH_VIDAYESTILO          = "VIDAYESTILO";           //11
+    public static final String PUSH_GLOBAL               = "GLOBAL";           //12
 
     public List<Article> articleList;
 
@@ -38,10 +39,9 @@ public class NewsData {
         editor = manager.edit();
     }
 
-    public void notificationSave(String seccion, int activo)
+    public void notificationSave(String seccion, String activo)
     {
-
-        editor.putInt(seccion, activo);
+        editor.putString(seccion, activo);
         editor.commit();
 
     }
@@ -51,17 +51,12 @@ public class NewsData {
         editor.commit();
     }
 
-    public void addBreakingNews()
-    {
-
-
-    }
 
     /* REGISTRO DE LAS OPCIONES DE PUSH */
 
-    public int getNotificationON(String seccion){
+    public String getNotificationON(String seccion){
 
-        return manager.getInt(seccion, 0);
+        return manager.getString(seccion, "");
 
     }
 
