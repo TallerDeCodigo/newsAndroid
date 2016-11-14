@@ -2,29 +2,29 @@ package com.lisa.televisa.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spanned;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import com.lisa.televisa.R;
 import com.lisa.televisa.Single;
 import com.lisa.televisa.model.Article;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by hever on 11/10/16.
@@ -34,6 +34,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.MyView
 
     private Context mContext;
     private List<Article> newsList;
+    public static final String TAG = ArticlesAdapter.class.getName();
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, excerpt, date;
@@ -78,8 +79,8 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.MyView
 
                 intent.putExtra("title", article.getTitle());
                 intent.putExtra("content", article.getContent());
-                intent.putExtra("image",article.getFeatured_media());
-                intent.putExtra("date",article.getDate_gmt());
+                intent.putExtra("image", article.getFeatured_media());
+                intent.putExtra("date", article.getDate_gmt());
 
                 mContext.startActivity(intent);
 
@@ -108,7 +109,8 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.MyView
             }
         });
 
-        Glide.with(mContext).load(article.getFeatured_media()).fitCenter().diskCacheStrategy(DiskCacheStrategy.SOURCE ).into(holder.thumbnail);
+
+        Glide.with(mContext).load(article.getFeatured_media()).dontAnimate().fitCenter().diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.thumbnail);
 
         holder.share.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,7 +131,9 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.MyView
             e.printStackTrace();
         }
 
-        holder.date.setText(datetime.substring(0, 1).toUpperCase() + datetime.substring(1));
+       //holder.date.setText(datetime.substring(0, 1).toUpperCase() + datetime.substring(1));
+
+        //Log.i(TAG, "Info");
 
     }
 

@@ -29,13 +29,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.lisa.televisa.adapter.ArticlesAdapter;
 import com.lisa.televisa.model.Article;
 import com.lisa.televisa.persistence.NewsData;
 import com.lisa.televisa.request.News;
 import com.lisa.televisa.seccions.BreakingNews;
+import com.lisa.televisa.seccions.Ciencia;
+import com.lisa.televisa.seccions.Deportes;
+import com.lisa.televisa.seccions.Economia;
+import com.lisa.televisa.seccions.Entreteniemiento;
+import com.lisa.televisa.seccions.Internacional;
+import com.lisa.televisa.seccions.Nacional;
+import com.lisa.televisa.seccions.Opinion;
+import com.lisa.televisa.seccions.Politica;
+import com.lisa.televisa.seccions.Vida;
 import com.lisa.televisa.utils.Helpers;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.lisa.televisa.config.Config;
@@ -51,6 +62,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
     public static final String TAG = MainActivity.class.getName();
     private boolean viewIsAtHome;
+    private int viewCurret;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     public NewsData newsdate;
     public static Activity activity;
@@ -122,15 +134,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
         displayFirebaseRegId();
 
-
-        if(newsdate.getPostID() != ""){
-
-            Log.d(TAG, "ID POST: " + newsdate.getPostID());
-            Intent i = new Intent(this, Single.class);
-            startActivity(i);
-
-
-        }
     }
 
     @Override
@@ -176,6 +179,12 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        if(viewCurret == item.getItemId()) {
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
+        }
+
         displayView(item.getItemId());
         return true;
     }
@@ -190,11 +199,87 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             case 0:
                 fragment = new BreakingNews();
                 viewIsAtHome = true;
+                viewCurret = 0;
                 break;
+
+            case R.id.nav_internacional:
+                fragment = new Internacional();
+                viewIsAtHome = false;
+                viewCurret = viewId;
+                break;
+
+            case R.id.nav_nacional:
+                fragment = new Nacional();
+                viewIsAtHome = false;
+                viewCurret = viewId;
+                break;
+
+
             case R.id.nav_cdmx:
                 fragment = new noticia();
                 viewIsAtHome = false;
+                viewCurret = viewId;
                 break;
+
+
+            case R.id.nav_politica:
+                fragment = new Politica();
+                viewIsAtHome = false;
+                viewCurret = viewId;
+                break;
+
+            case R.id.nav_economia:
+                fragment = new Economia();
+                viewIsAtHome = false;
+                viewCurret = viewId;
+                break;
+
+            case R.id.nav_opinion:
+                fragment = new Opinion();
+                viewIsAtHome = false;
+                viewCurret = viewId;
+                break;
+
+            case R.id.nav_tecnologia:
+                fragment = new Ciencia();
+                viewIsAtHome = false;
+                viewCurret = viewId;
+                break;
+
+            case R.id.nav_cultura:
+                fragment = new Ciencia();
+                viewIsAtHome = false;
+                viewCurret = viewId;
+                break;
+
+            case R.id.nav_deportes:
+                fragment = new Deportes();
+                viewIsAtHome = false;
+                viewCurret = viewId;
+                break;
+
+            case R.id.nav_entretenimiento:
+                fragment = new Entreteniemiento();
+                viewIsAtHome = false;
+                viewCurret = viewId;
+                break;
+
+            case R.id.nav_vida:
+                fragment = new Vida();
+                viewIsAtHome = false;
+                viewCurret = viewId;
+                break;
+
+            case R.id.about:
+                Intent intent = new Intent(this, About.class);
+                this.startActivity(intent);
+                break;
+
+            case R.id.settings:
+                Intent i = new Intent(this, Settings.class);
+                this.startActivity(i);
+                break;
+
 
         }
 

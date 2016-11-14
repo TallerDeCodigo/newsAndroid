@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 
 import com.lisa.televisa.model.Article;
 
+import java.util.List;
+
 /**
  * Created by hever on 11/11/16.
  */
@@ -24,6 +26,8 @@ public class NewsData {
     public static final String PUSH_DEPORTES             = "DEPORTES";              //9
     public static final String PUSH_ENTRETENIMIENTO      = "ENTRETENIMIENTO";       //10
     public static final String PUSH_VIDAYESTILO          = "VIDAYESTILO";           //11
+
+    public List<Article> articleList;
 
     private SharedPreferences manager;
     private SharedPreferences.Editor editor;
@@ -45,6 +49,12 @@ public class NewsData {
     public void setPostID(String postID){
         editor.putString(ID_PUBLICATIONS, postID);
         editor.commit();
+    }
+
+    public void addBreakingNews()
+    {
+
+
     }
 
     /* REGISTRO DE LAS OPCIONES DE PUSH */

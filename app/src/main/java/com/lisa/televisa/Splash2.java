@@ -4,18 +4,11 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-
-import com.lisa.televisa.request.News;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.lisa.televisa.utils.PollService;
 
 public class Splash2 extends AppCompatActivity {
 
-    public News newsRequest;
     public static final String TAG = Splash2.class.getName();
 
     public ImageView appIcon;
@@ -32,35 +25,15 @@ public class Splash2 extends AppCompatActivity {
             public void run() {
                 try {
                     synchronized (this) {
-                    /*
-                        newsRequest = new News("https://www.televisa.news/wp-json/wp/v2/breaking", new News.NewsListener() {
-
-                            @Override
-                            public void onGetNews(JSONArray jsonArray) {
-
-                                Log.d(TAG, jsonArray.toString());
-
-                            }
-
-                            @Override
-                            public void onGetNewsFaliure() {
-
-                            }
-                        });
-
-                        newsRequest.execute();
-                    */
+                        Log.i(TAG,"Init app");
                         wait(3000);
-
                     }
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
-                Intent intent;
-
-                intent = new Intent(Splash2.this, MainActivity.class);
+                //Init Feed Home Breaking News
+                Intent intent = new Intent(Splash2.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }

@@ -13,6 +13,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.lisa.televisa.R;
 import com.lisa.televisa.adapter.ArticlesAdapter;
@@ -39,6 +40,7 @@ public class BreakingNews extends Fragment {
     private List<Article> articleList;
     public News newsRequest;
     public Helpers helpers;
+    public ProgressBar progressBar;
 
     public BreakingNews() {
         // Required empty public constructor
@@ -46,7 +48,12 @@ public class BreakingNews extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
+        //Request to Breaking News
+
+
 
         getBreakingNews();
 
@@ -58,6 +65,10 @@ public class BreakingNews extends Fragment {
         View rootView = inflater.inflate(R.layout.activity_noticia, container, false);
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+
+        progressBar = (ProgressBar) rootView.findViewById(R.id.loader);
+        progressBar.setVisibility(View.VISIBLE);
+
         articleList  = new ArrayList<>();
         adapter      = new ArticlesAdapter(getContext(), articleList);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 1);
@@ -84,10 +95,14 @@ public class BreakingNews extends Fragment {
 
         helpers = new Helpers();
 
-        newsRequest = new News(getContext(), "https://www.televisa.news/wp-json/wp/v2/breaking", new News.NewsListener() {
+
+
+        newsRequest = new News(getContext(), "https://www.televisa.news/wp-json/news/v1/region/cdmx", new News.NewsListener() {
 
             @Override
             public void onGetNews(String json) {
+
+                Log.i(TAG, json);
 
                 try {
 
@@ -97,20 +112,19 @@ public class BreakingNews extends Fragment {
 
                         try {
 
-                            String content          = jsonArray.getJSONObject(i).getJSONObject("content").getString("rendered");
-                            String date_gmt         = jsonArray.getJSONObject(i).getString("date_gmt");
-                            String excerpt          = jsonArray.getJSONObject(i).getJSONObject("excerpt").getString("rendered");
-                            String featured_media   = jsonArray.getJSONObject(i).getString("featured_media");
-                            String guid             = jsonArray.getJSONObject(i).getString("guid");
+                            String content          = jsonArray.getJSONObject(i).getString("post_content");
+                            String date_gmt         = jsonArray.getJSONObject(i).getString("post_date_gmt");
+                            String excerpt          = jsonArray.getJSONObject(i).getString("post_excerpt");
+                            String featured_media   = jsonArray.getJSONObject(i).getString("image");
+                            String guid             = "";
                             int id                  = 0;
-                            String link             = jsonArray.getJSONObject(i).getString("link");
-                            String modified         = jsonArray.getJSONObject(i).getString("modified");
-                            String modified_gmt     = jsonArray.getJSONObject(i).getString("modified_gmt");
-                            String slug             = jsonArray.getJSONObject(i).getString("slug");
-                            String title            = jsonArray.getJSONObject(i).getJSONObject("title").getString("rendered");
-
-                            String type             = jsonArray.getJSONObject(i).getString("type");
-                            String _links           = jsonArray.getJSONObject(i).getString("_links");
+                            String link             = "";
+                            String modified         = "";
+                            String modified_gmt     = "";
+                            String slug             = "";
+                            String title            = jsonArray.getJSONObject(i).getString("post_title");
+                            String type             = jsonArray.getJSONObject(i).getString("post_type");
+                            String _links           = "";
 
 
                             Article n = new Article(content, date_gmt, excerpt, featured_media, guid, id, link, modified, modified_gmt, slug, title, type, _links);
@@ -128,7 +142,10 @@ public class BreakingNews extends Fragment {
                     e.printStackTrace();
                 }
 
-                setImagesIntoModel(articleList);
+                progressBar.setVisibility(View.GONE);
+
+                adapter.notifyDataSetChanged();
+               // setImagesIntoModel(articleList);
             }
 
             @Override
@@ -138,6 +155,8 @@ public class BreakingNews extends Fragment {
         });
 
         newsRequest.execute();
+
+
     }
 
 
@@ -187,6 +206,8 @@ public class BreakingNews extends Fragment {
         }
 
         adapter.notifyDataSetChanged();
+
+
     }
 
     /**

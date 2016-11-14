@@ -3,32 +3,36 @@ package com.lisa.televisa.seccions;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Rect;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.ViewGroup;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.lisa.televisa.R;
 import com.lisa.televisa.adapter.ArticlesAdapter;
 import com.lisa.televisa.model.Article;
 import com.lisa.televisa.request.News;
+import com.lisa.televisa.utils.Constants;
 import com.lisa.televisa.utils.Helpers;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class noticia extends Fragment {
+/**
+ * Created by hever on 11/14/16.
+ */
+
+public class Entreteniemiento extends Fragment {
 
     public static final String TAG = noticia.class.getName();
     private RecyclerView recyclerView;
@@ -36,18 +40,21 @@ public class noticia extends Fragment {
     private List<Article> articleList;
     public News newsRequest;
     public Helpers helpers;
-    public String seccion;
+    public ProgressBar progressBar;
+    public Constants constants;
 
-
-    public noticia() {
+    public Entreteniemiento() {
         // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
-        getBreakingNews();
+        //Request to Breaking News
+
+        getEntreteniemiento();
 
     }
 
@@ -57,16 +64,19 @@ public class noticia extends Fragment {
         View rootView = inflater.inflate(R.layout.activity_noticia, container, false);
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+
+        progressBar = (ProgressBar) rootView.findViewById(R.id.loader);
+        progressBar.setVisibility(View.VISIBLE);
+
         articleList  = new ArrayList<>();
         adapter      = new ArticlesAdapter(getContext(), articleList);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 1);
         recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(1, dpToPx(0), true));
+        recyclerView.addItemDecoration(new Entreteniemiento.GridSpacingItemDecoration(1, dpToPx(0), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
 
         // Inflate the layout for this fragment
-
         return rootView;
     }
 
@@ -80,14 +90,16 @@ public class noticia extends Fragment {
         super.onDetach();
     }
 
-    public void getBreakingNews(){
+    public void getEntreteniemiento(){
 
         helpers = new Helpers();
 
-        newsRequest = new News(getContext(), "https://www.televisa.news/wp-json/wp/v2/noticia", new News.NewsListener() {
+        newsRequest = new News(getContext(), constants.URL_SERVICES + "topico/entretenimiento", new News.NewsListener() {
 
             @Override
             public void onGetNews(String json) {
+
+                Log.i(TAG, json);
 
                 try {
 
@@ -97,20 +109,19 @@ public class noticia extends Fragment {
 
                         try {
 
-                            String content          = jsonArray.getJSONObject(i).getJSONObject("content").getString("rendered");
-                            String date_gmt         = jsonArray.getJSONObject(i).getString("date_gmt");
-                            String excerpt          = jsonArray.getJSONObject(i).getJSONObject("excerpt").getString("rendered");
-                            String featured_media   = jsonArray.getJSONObject(i).getString("featured_media");
-                            String guid             = jsonArray.getJSONObject(i).getString("guid");
+                            String content          = jsonArray.getJSONObject(i).getString("post_content");
+                            String date_gmt         = jsonArray.getJSONObject(i).getString("post_date_gmt");
+                            String excerpt          = jsonArray.getJSONObject(i).getString("post_excerpt");
+                            String featured_media   = jsonArray.getJSONObject(i).getString("image");
+                            String guid             = "";
                             int id                  = 0;
-                            String link             = jsonArray.getJSONObject(i).getString("link");
-                            String modified         = jsonArray.getJSONObject(i).getString("modified");
-                            String modified_gmt     = jsonArray.getJSONObject(i).getString("modified_gmt");
-                            String slug             = jsonArray.getJSONObject(i).getString("slug");
-                            String title            = jsonArray.getJSONObject(i).getJSONObject("title").getString("rendered");
-
-                            String type             = jsonArray.getJSONObject(i).getString("type");
-                            String _links           = jsonArray.getJSONObject(i).getString("_links");
+                            String link             = "";
+                            String modified         = "";
+                            String modified_gmt     = "";
+                            String slug             = "";
+                            String title            = jsonArray.getJSONObject(i).getString("post_title");
+                            String type             = jsonArray.getJSONObject(i).getString("post_type");
+                            String _links           = "";
 
 
                             Article n = new Article(content, date_gmt, excerpt, featured_media, guid, id, link, modified, modified_gmt, slug, title, type, _links);
@@ -128,7 +139,9 @@ public class noticia extends Fragment {
                     e.printStackTrace();
                 }
 
-                setImagesIntoModel(articleList);
+                progressBar.setVisibility(View.GONE);
+
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -138,55 +151,8 @@ public class noticia extends Fragment {
         });
 
         newsRequest.execute();
-    }
 
 
-    public void setImagesIntoModel(List<Article> articleList){
-
-        helpers = new Helpers();
-
-        for (int i=0; i<articleList.size(); i++) {
-
-            final Article article = articleList.get(i);
-
-            String url = "https://televisa.news/wp-json/wp/v2/media/" + article.getFeatured_media();
-
-            newsRequest = new News(getContext(),url , new News.NewsListener() {
-
-                String urlImage = "";
-
-                @Override
-                public void onGetNews(String jsonArticles) {
-                    try {
-
-                        JSONObject jsonObject = new JSONObject(jsonArticles);
-
-                        try {
-
-                            urlImage   = jsonObject.getString("source_url");
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-
-
-                    }catch (JSONException e){
-                        e.printStackTrace();
-                    }
-                    article.setFeatured_media(urlImage);
-                }
-
-                @Override
-                public void onGetNewsFaliure() {
-
-                }
-            });
-            newsRequest.execute();
-        }
-
-        adapter.notifyDataSetChanged();
     }
 
     /**
