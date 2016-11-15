@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), Onlive.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 getApplication().startActivity(i);
             }
         });
@@ -389,15 +390,21 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                             String title         = jsonArray.getJSONObject(i).getString("title");
                             String hashtag       = jsonArray.getJSONObject(i).getString("hashtag");
                             String vivo          = jsonArray.getJSONObject(i).getString("vivo");
+                            RelativeLayout rela = (RelativeLayout) findViewById(R.id.activity_noticia);
+                            final float scale = getResources().getDisplayMetrics().density;
+                            int padding_56dp = (int) (56 * scale + 0.5f);
+                            int padding_90dp = (int) (90 * scale + 0.5f);
 
                             if(vivo.equals("1")) {
                                 onLive.setVisibility(View.VISIBLE);
+                                rela.setPadding(0,padding_90dp,0,0);
                                 txtTitle.setText(title);
                                 txtHashTag.setText(hashtag);
 
                             }
                             else {
                                 onLive.setVisibility(View.GONE);
+                                rela.setPadding(0,padding_56dp,0,0);
                                 txtTitle.setText("");
                                 txtHashTag.setText("");
                             }
