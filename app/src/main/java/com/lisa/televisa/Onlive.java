@@ -1,12 +1,35 @@
 package com.lisa.televisa;
 
 import android.annotation.SuppressLint;
+import android.net.Uri;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.google.android.exoplayer2.DefaultLoadControl;
+import com.google.android.exoplayer2.ExoPlayer;
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.LoadControl;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
+import com.google.android.exoplayer2.extractor.ExtractorsFactory;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.source.LoopingMediaSource;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.hls.HlsMediaSource;
+import com.google.android.exoplayer2.trackselection.AdaptiveVideoTrackSelection;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelection;
+import com.google.android.exoplayer2.trackselection.TrackSelector;
+import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
+import com.google.android.exoplayer2.upstream.BandwidthMeter;
+import com.google.android.exoplayer2.upstream.DataSource;
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.util.Util;
 
 
 /**
@@ -20,6 +43,7 @@ public class Onlive extends AppCompatActivity {
      */
     private static final boolean AUTO_HIDE = true;
 
+    private SimpleExoPlayerView exoPlayer;
 
     /**
      * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
@@ -51,7 +75,9 @@ public class Onlive extends AppCompatActivity {
                     | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         }
     };
+
     private View mControlsView;
+
     private final Runnable mShowPart2Runnable = new Runnable() {
         @Override
         public void run() {
@@ -63,7 +89,9 @@ public class Onlive extends AppCompatActivity {
             mControlsView.setVisibility(View.VISIBLE);
         }
     };
+
     private boolean mVisible;
+
     private final Runnable mHideRunnable = new Runnable() {
         @Override
         public void run() {
@@ -91,6 +119,45 @@ public class Onlive extends AppCompatActivity {
 
         setContentView(R.layout.activity_onlive);
 
+        exoPlayer = (SimpleExoPlayerView) findViewById(R.id.player_view);
+        Handler mainHandler = new Handler();
+
+        DefaultBandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
+
+        TrackSelection.Factory videoTrackSelectionFactory =
+                new AdaptiveVideoTrackSelection.Factory(bandwidthMeter);
+        TrackSelector trackSelector =
+                new DefaultTrackSelector(mainHandler, videoTrackSelectionFactory);
+
+        LoadControl loadControl = new DefaultLoadControl();
+
+        SimpleExoPlayer player =
+                ExoPlayerFactory.newSimpleInstance(getApplicationContext(), trackSelector, loadControl);
+
+        Uri mp4VideoUri = Uri.parse("http://185417-f.akamaihd.net/i/n0tf0r0_1@81283/master.m3u8");
+        // Measures bandwidth during playback. Can be null if not required.
+
+        // Produces DataSource instances through which media data is loaded.
+
+        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(this,
+                Util.getUserAgent(this, "televisa.NEWS"), bandwidthMeter);
+
+        // Produces Extractor instances for parsing the media data.
+        ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
+
+        // This is the MediaSource representing the media to be played.
+        MediaSource videoSource = new HlsMediaSource(mp4VideoUri,
+                dataSourceFactory, 1, null, null);
+
+        LoopingMediaSource loopingSource = new LoopingMediaSource(videoSource);
+
+        // Prepare the player with the source.
+        player.prepare(videoSource);
+
+        exoPlayer.setPlayer(player);
+
+        exoPlayer.getPlayer().setPlayWhenReady(true);
+
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
@@ -107,9 +174,6 @@ public class Onlive extends AppCompatActivity {
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
         //findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
-
-
-
 
     }
 
@@ -165,4 +229,11 @@ public class Onlive extends AppCompatActivity {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
+
+    @Override
+    public void onBackPressed() {
+        exoPlayer.getPlayer().stop();
+        finish();
+    }
+
 }

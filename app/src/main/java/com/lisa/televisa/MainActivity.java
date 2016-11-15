@@ -47,12 +47,12 @@ import com.lisa.televisa.seccions.Nacional;
 import com.lisa.televisa.seccions.Opinion;
 import com.lisa.televisa.seccions.Politica;
 import com.lisa.televisa.seccions.Vida;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.lisa.televisa.config.Config;
 import com.lisa.televisa.utils.Constants;
 import com.lisa.televisa.utils.NotificationUtils;
-
 import com.lisa.televisa.seccions.noticia;
+
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -139,37 +139,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                     // now subscribe to `global` topic to receive app wide notifications
 
                     FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
-                    if(newsData.getNotificationON(newsData.PUSH_INTERNACIONAL).equals("1"))
-                        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_INT);
-                    if(newsData.getNotificationON(newsData.PUSH_NACIONAL).equals("1"))
-                        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_NAC);
-                    if(newsData.getNotificationON(newsData.PUSH_CDMX).equals("1"))
-                        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_CDMX);
-
-                    /*
-                    if(newsData.getNotificationON(newsData.PUSH_INTERNACIONAL).equals("1"))
-                        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
-                    if(newsData.getNotificationON(newsData.PUSH_INTERNACIONAL).equals("1"))
-                        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
-                    if(newsData.getNotificationON(newsData.PUSH_INTERNACIONAL).equals("1"))
-                        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
-                    if(newsData.getNotificationON(newsData.PUSH_INTERNACIONAL).equals("1"))
-                        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
-                    if(newsData.getNotificationON(newsData.PUSH_INTERNACIONAL).equals("1"))
-                        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
-                    if(newsData.getNotificationON(newsData.PUSH_INTERNACIONAL).equals("1"))
-                        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
-                    if(newsData.getNotificationON(newsData.PUSH_INTERNACIONAL).equals("1"))
-                        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
-                    if(newsData.getNotificationON(newsData.PUSH_INTERNACIONAL).equals("1"))
-                        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
-                    if(newsData.getNotificationON(newsData.PUSH_INTERNACIONAL).equals("1"))
-                        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
-                    if(newsData.getNotificationON(newsData.PUSH_INTERNACIONAL).equals("1"))
-                        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
-                    if(newsData.getNotificationON(newsData.PUSH_INTERNACIONAL).equals("1"))
-                        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
-                    */
 
                     displayFirebaseRegId();
 

@@ -1,22 +1,21 @@
 package com.lisa.televisa;
 
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import com.google.firebase.messaging.FirebaseMessaging;
 
+import com.lisa.televisa.config.Config;
 import com.lisa.televisa.persistence.NewsData;
 
 public class Settings extends AppCompatActivity {
 
     public NewsData newsData;
 
-    public Switch iSwitch, nSwitch, cdmxSwitch, pSwitch, eSwitch, oSwitch, ecoSwitch, opSwitch, ciSwitch, culSwitch, depSwitch, entSwitch, vidaSwitch;
+    public Switch aSwitch, iSwitch, nSwitch, cdmxSwitch, pSwitch, eSwitch, oSwitch, ciSwitch, culSwitch, depSwitch, entSwitch, vidaSwitch;
 
     public static final String TAG = Settings.class.getName();
 
@@ -31,7 +30,7 @@ public class Settings extends AppCompatActivity {
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
-
+        aSwitch         = (Switch) findViewById(R.id.sw_global);
         iSwitch         = (Switch) findViewById(R.id.sw_internacional);
         nSwitch         = (Switch) findViewById(R.id.sw_nacional);
         cdmxSwitch      = (Switch) findViewById(R.id.sw_cdmx);
@@ -48,7 +47,7 @@ public class Settings extends AppCompatActivity {
 
         Log.d(TAG,newsData.getNotificationON(newsData.PUSH_INTERNACIONAL));
 
-
+        aSwitch.setChecked(newsData.getNotificationON(newsData.PUSH_GLOBAL).equals("1"));
         iSwitch.setChecked(newsData.getNotificationON(newsData.PUSH_INTERNACIONAL).equals("1"));
         nSwitch.setChecked(newsData.getNotificationON(newsData.PUSH_NACIONAL).equals("1"));
         cdmxSwitch.setChecked(newsData.getNotificationON(newsData.PUSH_CDMX).equals("1"));
@@ -62,114 +61,162 @@ public class Settings extends AppCompatActivity {
         vidaSwitch.setChecked(newsData.getNotificationON(newsData.PUSH_VIDAYESTILO).equals("1"));
 
 
+        aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if(isChecked) {
+                FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+                newsData.notificationSave(newsData.PUSH_GLOBAL, "1");
+            } else {
+                newsData.notificationSave(newsData.PUSH_GLOBAL, "0");
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(Config.TOPIC_GLOBAL);
+            }
+            }
+        });
+
         iSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
-                    newsData.notificationSave(newsData.PUSH_INTERNACIONAL, "1");
-                else
-                    newsData.notificationSave(newsData.PUSH_INTERNACIONAL, "0");
+            if(isChecked) {
+                FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_INT);
+                newsData.notificationSave(newsData.PUSH_INTERNACIONAL, "1");
+            } else {
+                newsData.notificationSave(newsData.PUSH_INTERNACIONAL, "0");
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(Config.TOPIC_INT);
+            }
             }
         });
 
         nSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
-                    newsData.notificationSave(newsData.PUSH_NACIONAL, "1");
-                else
-                    newsData.notificationSave(newsData.PUSH_NACIONAL, "0");
+
+            if(isChecked) {
+                newsData.notificationSave(newsData.PUSH_NACIONAL, "1");
+                FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_NAC);
+            } else {
+                newsData.notificationSave(newsData.PUSH_NACIONAL, "0");
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(Config.TOPIC_NAC);
+            }
             }
         });
 
         cdmxSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
-                    newsData.notificationSave(newsData.PUSH_CDMX, "1");
-                else
-                    newsData.notificationSave(newsData.PUSH_CDMX, "0");
+            if(isChecked) {
+                newsData.notificationSave(newsData.PUSH_CDMX, "1");
+                FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_CDMX);
+            } else {
+                newsData.notificationSave(newsData.PUSH_CDMX, "0");
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(Config.TOPIC_CDMX);
+            }
             }
         });
-
 
         eSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
-                    newsData.notificationSave(newsData.PUSH_ECONOMIA, "1");
-                else
-                    newsData.notificationSave(newsData.PUSH_ECONOMIA, "0");
+            if(isChecked) {
+                newsData.notificationSave(newsData.PUSH_ECONOMIA, "1");
+                FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_ECO);
+            } else {
+                newsData.notificationSave(newsData.PUSH_ECONOMIA, "0");
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(Config.TOPIC_ECO);
+            }
             }
         });
 
         pSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
-                    newsData.notificationSave(newsData.PUSH_POLITICA, "1");
-                else
-                    newsData.notificationSave(newsData.PUSH_POLITICA, "0");
+            if(isChecked) {
+                newsData.notificationSave(newsData.PUSH_POLITICA, "1");
+                FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_POL);
+            } else {
+                newsData.notificationSave(newsData.PUSH_POLITICA, "0");
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(Config.TOPIC_POL);
+            }
             }
         });
 
         oSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
-                    newsData.notificationSave(newsData.PUSH_OPINION, "1");
-                else
-                    newsData.notificationSave(newsData.PUSH_OPINION, "0");
+            if(isChecked) {
+                newsData.notificationSave(newsData.PUSH_OPINION, "1");
+                FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_OPI);
+            } else {
+                newsData.notificationSave(newsData.PUSH_OPINION, "0");
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(Config.TOPIC_OPI);
+            }
             }
         });
 
         ciSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
-                    newsData.notificationSave(newsData.PUSH_CIENCIAYTECNOLOGIA, "1");
-                else
-                    newsData.notificationSave(newsData.PUSH_CIENCIAYTECNOLOGIA, "0");
+            if(isChecked) {
+                newsData.notificationSave(newsData.PUSH_CIENCIAYTECNOLOGIA, "1");
+                FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_CYT);
+            } else {
+                newsData.notificationSave(newsData.PUSH_CIENCIAYTECNOLOGIA, "0");
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(Config.TOPIC_CYT);
+            }
             }
         });
 
         culSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
-                    newsData.notificationSave(newsData.PUSH_CULTURA, "1");
-                else
-                    newsData.notificationSave(newsData.PUSH_CULTURA, "0");
+            if(isChecked) {
+                newsData.notificationSave(newsData.PUSH_CULTURA, "1");
+                FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_CUL);
+            } else {
+                newsData.notificationSave(newsData.PUSH_CULTURA, "0");
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(Config.TOPIC_CUL);
+            }
             }
         });
 
         depSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
-                    newsData.notificationSave(newsData.PUSH_DEPORTES, "1");
-                else
-                    newsData.notificationSave(newsData.PUSH_DEPORTES, "0");
+
+            if(isChecked) {
+                newsData.notificationSave(newsData.PUSH_DEPORTES, "1");
+                FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_DEP);
+            } else {
+                newsData.notificationSave(newsData.PUSH_DEPORTES, "0");
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(Config.TOPIC_DEP);
+            }
             }
         });
 
         entSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
+                if(isChecked) {
                     newsData.notificationSave(newsData.PUSH_ENTRETENIMIENTO, "1");
-                else
+                    FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_ENT);
+                } else {
                     newsData.notificationSave(newsData.PUSH_ENTRETENIMIENTO, "0");
+                    FirebaseMessaging.getInstance().unsubscribeFromTopic(Config.TOPIC_ENT);
+                }
             }
         });
 
         vidaSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
+
+                if(isChecked) {
                     newsData.notificationSave(newsData.PUSH_VIDAYESTILO, "1");
-                else
+                    FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_VYE);
+                } else {
                     newsData.notificationSave(newsData.PUSH_VIDAYESTILO, "0");
+                    FirebaseMessaging.getInstance().unsubscribeFromTopic(Config.TOPIC_VYE);
+                }
             }
         });
 
