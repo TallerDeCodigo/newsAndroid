@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -22,7 +23,9 @@ import android.text.Spanned;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -37,6 +40,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static android.view.View.GONE;
 import static com.lisa.televisa.R.color.black;
 import static com.lisa.televisa.R.drawable.blank;
 
@@ -49,20 +53,36 @@ public class Single extends AppCompatActivity {
     public TextView txtTitle, txtContent, date;
     public ImageView thumbnail;
     public String link = "";
+    public Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.app_bar_single);
+        setContentView(R.layout.fluid_single);
 
         txtTitle    = (TextView) findViewById(R.id.txtTitle);
         txtContent  = (TextView) findViewById(R.id.txtContent);
         thumbnail   = (ImageView) findViewById(R.id.imageView2);
         date        = (TextView) findViewById(R.id.txtTime);
 
-        //FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        //fab.setBackgroundTintList(new ColorStateList(new int[][]{new int[]{0}}, new int[]{black}));
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               /* Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent i = new Intent(getApplicationContext(), Single.class);
+                                getApplication().startActivity(i);
+                            }
+                        }).show();*/
+                Intent i = new Intent(getApplicationContext(), Onlive.class);
+                getApplication().startActivity(i);
+
+            }
+        });
 
         Bundle extras = getIntent().getExtras();
 
@@ -94,25 +114,6 @@ public class Single extends AppCompatActivity {
 
         txtTitle.setText(Html.fromHtml(title));
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setBackgroundTintList(new ColorStateList(new int[][]{new int[]{0}}, new int[]{black}));
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               /* Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent i = new Intent(getApplicationContext(), Single.class);
-                                getApplication().startActivity(i);
-                            }
-                        }).show();*/
-                Intent i = new Intent(getApplicationContext(), Onlive.class);
-                getApplication().startActivity(i);
-
-            }
-        });
-
         Spanned result;
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
@@ -125,7 +126,7 @@ public class Single extends AppCompatActivity {
 
         Glide.with(getApplicationContext()).load(image).dontAnimate().fitCenter().diskCacheStrategy(DiskCacheStrategy.ALL).into(thumbnail);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }

@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setBackgroundTintList(new ColorStateList(new int[][]{new int[]{0}}, new int[]{black}));
+        //fab.setBackgroundTintList(new ColorStateList(new int[][]{new int[]{0}}, new int[]{black}));
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
