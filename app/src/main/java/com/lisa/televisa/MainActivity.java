@@ -31,11 +31,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.lisa.televisa.adapter.ArticlesAdapter;
 import com.lisa.televisa.model.Article;
 import com.lisa.televisa.persistence.NewsData;
 import com.lisa.televisa.request.News;
@@ -49,13 +47,15 @@ import com.lisa.televisa.seccions.Nacional;
 import com.lisa.televisa.seccions.Opinion;
 import com.lisa.televisa.seccions.Politica;
 import com.lisa.televisa.seccions.Vida;
-import com.lisa.televisa.utils.Helpers;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.lisa.televisa.config.Config;
+import com.lisa.televisa.utils.Constants;
 import com.lisa.televisa.utils.NotificationUtils;
 
-import java.util.List;
 import com.lisa.televisa.seccions.noticia;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import static com.lisa.televisa.R.color.black;
 
@@ -68,7 +68,10 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     public NewsData newsData;
     public static Activity activity;
-
+    public News newsRequest;
+    public Constants constants;
+    public RelativeLayout onLive;
+    public TextView txtTitle, txtHashTag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +81,23 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         setSupportActionBar(toolbar);
 
         newsData = new NewsData(getApplicationContext());
+
+        onLive = (RelativeLayout) findViewById(R.id.live_ad);
+
+        onLive.setVisibility(View.GONE);
+
+        onLive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), Onlive.class);
+                getApplication().startActivity(i);
+            }
+        });
+
+        txtTitle    = (TextView) findViewById(R.id.live_text);
+        txtHashTag  = (TextView) findViewById(R.id.live_tema);
+
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setBackgroundTintList(new ColorStateList(new int[][]{new int[]{0}}, new int[]{black}));
@@ -165,8 +185,10 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 }
             }
         };
-
         displayFirebaseRegId();
+
+        getOnLive();
+
 
     }
 
@@ -313,8 +335,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 Intent i = new Intent(this, Settings.class);
                 this.startActivity(i);
                 break;
-
-
         }
 
         if (fragment != null) {
@@ -360,6 +380,8 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
         // clear the notification area when the app is opened
         NotificationUtils.clearNotifications(getApplicationContext());
+
+        getOnLive();
     }
 
     @Override
@@ -376,4 +398,58 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         getApplication().startActivity(i);
     }
 
+
+    public void getOnLive() {
+
+        newsRequest = new News(getApplicationContext(), constants.URL_SERVICES + "stuff/onlive", new News.NewsListener() {
+
+            @Override
+            public void onGetNews(String jsonArticles) {
+
+                try {
+
+                    Log.d(TAG, jsonArticles);
+
+                    JSONArray jsonArray = new JSONArray(jsonArticles);
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+
+                        try {
+
+                            String title         = jsonArray.getJSONObject(i).getString("title");
+                            String hashtag       = jsonArray.getJSONObject(i).getString("hashtag");
+                            String vivo          = jsonArray.getJSONObject(i).getString("vivo");
+
+                            if(vivo.equals("1")) {
+                                onLive.setVisibility(View.VISIBLE);
+                                txtTitle.setText(title);
+                                txtHashTag.setText(hashtag);
+
+                            }
+                            else {
+                                onLive.setVisibility(View.GONE);
+                                txtTitle.setText("");
+                                txtHashTag.setText("");
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            @Override
+            public void onGetNewsFaliure() {
+
+            }
+        });
+
+        newsRequest.execute();
+    }
 }
