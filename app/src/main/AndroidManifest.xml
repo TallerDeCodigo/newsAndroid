@@ -58,5 +58,5 @@
             android:name=".Settings"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>
-
+    <service android:name=".LocationService" android:process=":my_service" />
 </manifest>
