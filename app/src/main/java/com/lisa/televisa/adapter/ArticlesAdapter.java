@@ -146,9 +146,12 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.MyView
     public void ShareThis(String message)
     {
         Intent sendIntent = new Intent();
+
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+        sendIntent.putExtra(sendIntent.EXTRA_SUBJECT, "televisa.NEWS");
+        sendIntent.putExtra(sendIntent.EXTRA_TEXT, message);
         sendIntent.setType("text/plain");
+
         mContext.startActivity(Intent.createChooser(sendIntent, "Compartir"));
     }
 
