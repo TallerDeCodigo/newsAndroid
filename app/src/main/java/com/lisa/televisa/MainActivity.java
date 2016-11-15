@@ -72,6 +72,8 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     public Constants constants;
     public RelativeLayout onLive;
     public TextView txtTitle, txtHashTag;
+    public RelativeLayout mRoot;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +100,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         txtTitle    = (TextView) findViewById(R.id.live_text);
         txtHashTag  = (TextView) findViewById(R.id.live_tema);
 
-
+        mRoot = (RelativeLayout) findViewById(R.id.content_main);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         //fab.setBackgroundTintList(new ColorStateList(new int[][]{new int[]{0}}, new int[]{black}));
@@ -150,9 +152,25 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                     String message = intent.getStringExtra("message");
                     String postID = intent.getStringExtra("postID");
 
-                    //Intent i = new Intent(getApplicationContext(), Single.class);
-                    //getApplication().startActivity(i);
+                    Log.d(TAG, "Mensaje: " + message);
+                    Log.d(TAG, "postID: " + postID);
 
+
+                    Snackbar.make(mRoot, message, Snackbar.LENGTH_INDEFINITE)
+                        .setAction("Ver", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent i = new Intent(getApplicationContext(), Single.class);
+                                i.putExtra("title", "");
+                                i.putExtra("content", "");
+                                i.putExtra("image", "");
+                                i.putExtra("date", "");
+                                i.putExtra("link", "");
+                                i.putExtra("postID", "");
+
+                                getApplication().startActivity(i);
+                            }
+                        }).setDuration(10000).show();
                 }
             }
         };

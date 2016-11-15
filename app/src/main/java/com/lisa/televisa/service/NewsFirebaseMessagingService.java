@@ -71,6 +71,7 @@ public class NewsFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     private void handleDataMessage(JSONObject json) {
+
         Log.e(TAG, "push json: " + json.toString());
 
         newsData =  new NewsData(getApplicationContext());
