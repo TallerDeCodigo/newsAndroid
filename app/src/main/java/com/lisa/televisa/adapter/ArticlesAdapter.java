@@ -105,6 +105,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.MyView
                 intent.putExtra("content", article.getContent());
                 intent.putExtra("image",article.getFeatured_media());
                 intent.putExtra("date",article.getDate_gmt());
+                intent.putExtra("link",article.getLink());
                 mContext.startActivity(intent);
             }
         });

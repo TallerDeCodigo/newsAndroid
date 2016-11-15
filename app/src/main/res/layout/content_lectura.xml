@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.lisa.televisa.MainActivity"
     tools:showIn="@layout/app_bar_single">
 
@@ -15,66 +16,33 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:id="@+id/img_frame"
-                android:layout_height="300dp"
-                android:background="@color/gray"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginBottom="18dp">
-
-                <ImageView
-                    android:id="@+id/imageView_bkg"
-                    android:src="@drawable/bkg_thumb"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:scaleType="centerCrop"
-                    />
-
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:src="@drawable/bkg_thumb"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:scaleType="centerCrop"
-                    />
-
-            </RelativeLayout>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
                 android:text="Lorem Ipsum Dolor Sit Amet, usado desde el año 1500."
-                android:textAlignment="textStart"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/txtTitle"
-                android:textSize="26dp"
+                android:textSize="22dp"
                 android:textStyle="bold"
-                android:shadowColor="#000"
-                android:shadowDx="1.7"
-                android:shadowDy="1.7"
-                android:shadowRadius="1.1"
-                android:textColor="#FFF"
-                android:layout_marginLeft="16dp"
+                android:textColor="@color/black"
+                android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_alignBottom="@+id/img_frame"
-                android:layout_marginBottom="12dp" />
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="16dp" />
 
             <TextView
                 android:text="Fuente: Noticieros Televisa  |  Agosto 12, 2016"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/txtTime"
                 android:textSize="11dp"
-                android:layout_below="@+id/img_frame"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginBottom="15dp"/>
+                android:layout_marginBottom="15dp" />
 
 
             <TextView
@@ -91,8 +59,7 @@
                 android:layout_centerHorizontal="true"
                 android:lineSpacingExtra="5dp"/>
 
-
-        </RelativeLayout>
+        </LinearLayout>
 
     </ScrollView>
 
