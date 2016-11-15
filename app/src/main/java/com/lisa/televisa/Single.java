@@ -79,6 +79,7 @@ public class Single extends AppCompatActivity {
                             }
                         }).show();*/
                 Intent i = new Intent(getApplicationContext(), Onlive.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 getApplication().startActivity(i);
 
             }
@@ -161,6 +162,9 @@ public class Single extends AppCompatActivity {
                 sendIntent.setType("text/plain");
                 this.startActivity(Intent.createChooser(sendIntent, "Compartir"));
                 return true;
+
+            case android.R.id.home:
+                finish();
 
             default:
                 // If we got here, the user's action was not recognized.

@@ -113,6 +113,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                             }
                         }).show();*/
                 Intent i = new Intent(getApplicationContext(), Onlive.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 getApplication().startActivity(i);
 
             }
