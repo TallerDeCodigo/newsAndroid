@@ -2,10 +2,16 @@ package com.lisa.televisa;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +19,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.Spanned;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,6 +38,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static com.lisa.televisa.R.color.black;
+import static com.lisa.televisa.R.drawable.blank;
 
 /**
  * Created by hever on 11/10/16.
@@ -39,6 +48,7 @@ public class Single extends AppCompatActivity {
 
     public TextView txtTitle, txtContent, date;
     public ImageView thumbnail;
+    public String link = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +61,8 @@ public class Single extends AppCompatActivity {
         thumbnail   = (ImageView) findViewById(R.id.imageView2);
         date        = (TextView) findViewById(R.id.txtTime);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setBackgroundTintList(new ColorStateList(new int[][]{new int[]{0}}, new int[]{black}));
+        //FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        //fab.setBackgroundTintList(new ColorStateList(new int[][]{new int[]{0}}, new int[]{black}));
 
         Bundle extras = getIntent().getExtras();
 
@@ -66,6 +76,7 @@ public class Single extends AppCompatActivity {
             content = extras.getString("content");
             image   = extras.getString("image");
             time    = extras.getString("date");
+            link    = extras.getString("link");
         }
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -79,9 +90,28 @@ public class Single extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        date.setText("Fuente Noticieros Televisa  |  " + time.substring(0, 1).toUpperCase() + time.substring(1));
+        date.setText("Fuente: Noticieros Televisa  |  " + time.substring(0, 1).toUpperCase() + time.substring(1));
 
         txtTitle.setText(Html.fromHtml(title));
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setBackgroundTintList(new ColorStateList(new int[][]{new int[]{0}}, new int[]{black}));
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               /* Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent i = new Intent(getApplicationContext(), Single.class);
+                                getApplication().startActivity(i);
+                            }
+                        }).show();*/
+                Intent i = new Intent(getApplicationContext(), Onlive.class);
+                getApplication().startActivity(i);
+
+            }
+        });
 
         Spanned result;
 
@@ -104,6 +134,39 @@ public class Single extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        //Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.fondo);
+        //final BitmapDrawable bd = new BitmapDrawable(bitmap);
+        //final ColorDrawable cd = new ColorDrawable(Color.rgb(68, 74, 83));
+        //cd.setAlpha(0);
+        //getSupportActionBar().setBackgroundDrawable(cd);
+
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.single, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_share:
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, link);
+                sendIntent.setType("text/plain");
+                this.startActivity(Intent.createChooser(sendIntent, "Compartir"));
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 
 

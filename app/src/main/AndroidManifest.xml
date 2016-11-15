@@ -47,15 +47,18 @@
         <activity android:name=".About" />
         <activity
             android:name=".Single"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Onlive"
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_onlive"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".Settings"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
