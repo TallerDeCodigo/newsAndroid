@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         mRoot = (RelativeLayout) findViewById(R.id.content_main);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setBackgroundTintList(new ColorStateList(new int[][]{new int[]{0}}, new int[]{black}));
+        //fab.setBackgroundTintList(new ColorStateList(new int[][]{new int[]{0}}, new int[]{black}));
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                             }
                         }).show();*/
                 Intent i = new Intent(getApplicationContext(), Onlive.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 getApplication().startActivity(i);
 
             }
