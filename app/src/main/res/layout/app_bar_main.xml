@@ -27,6 +27,65 @@
             android:layout_height="?attr/actionBarSize"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:id="@+id/live_ad"
+            android:layout_height="35dp"
+            android:background="@color/yellow"
+            >
+
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="28dp"
+                android:src="@drawable/live_"
+                android:layout_marginTop="3dp"
+                android:layout_marginLeft="9dp"
+                android:id="@+id/logo_live" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="#TemaDeVideo"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/logo_live"
+                android:layout_marginStart="8dp"
+                android:paddingTop="0dp"
+                android:id="@+id/live_tema" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="I"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/live_tema"
+                android:layout_marginStart="5dp"
+                android:paddingTop="0dp"
+                android:id="@+id/live_sep" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Elecciones EUA 2016"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/live_sep"
+                android:layout_marginStart="7dp"
+                android:paddingTop="0dp"
+                android:id="@+id/live_text" />
+
+        </RelativeLayout>
+
     </android.support.design.widget.AppBarLayout>
 
 
