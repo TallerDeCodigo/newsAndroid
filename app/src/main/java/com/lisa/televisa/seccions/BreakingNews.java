@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import com.lisa.televisa.R;
 import com.lisa.televisa.adapter.ArticlesAdapter;
@@ -130,7 +131,6 @@ public class BreakingNews extends Fragment {
                             Article n = new Article(content, date_gmt, excerpt, featured_media, guid, id, link, modified, modified_gmt, slug, title, type, _links);
                             articleList.add(n);
 
-                            Log.d(TAG, featured_media);
 
 
                         } catch (JSONException e) {

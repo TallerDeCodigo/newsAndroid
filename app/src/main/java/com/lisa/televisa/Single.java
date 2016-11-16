@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -41,6 +43,8 @@ public class Single extends AppCompatActivity {
     public Toolbar toolbar;
     public News newsRequest;
     public Constants constants;
+    public ProgressBar loading;
+    public ScrollView scrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +56,8 @@ public class Single extends AppCompatActivity {
         txtContent  = (TextView) findViewById(R.id.txtContent);
         thumbnail   = (ImageView) findViewById(R.id.imageView2);
         date        = (TextView) findViewById(R.id.txtTime);
+        loading     = (ProgressBar) findViewById(R.id.loader);
+        scrollView  = (ScrollView) findViewById(R.id.scroll_view);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +118,8 @@ public class Single extends AppCompatActivity {
 
             Glide.with(getApplicationContext()).load(image).dontAnimate().fitCenter().diskCacheStrategy(DiskCacheStrategy.ALL).into(thumbnail);
         }else{
+            loading.setVisibility(View.VISIBLE);
+            scrollView.setVisibility(View.GONE);
             getPostByID(postID);
         }
 
@@ -212,6 +220,9 @@ public class Single extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
+                        loading.setVisibility(View.GONE);
+                        scrollView.setVisibility(View.VISIBLE);
 
                     }
                 }catch (JSONException e){
