@@ -68,6 +68,6 @@
     <item
         android:title="Acerca de"
         android:icon="@drawable/ic_about"
-        android:id="@+id/about" />
+        android:id="@+id/ic_about" />
 
 </menu>

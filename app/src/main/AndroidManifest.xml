@@ -47,7 +47,6 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
-        <activity android:name=".About" />
         <activity
             android:name=".Single"
             android:theme="@style/AppTheme.NoActionBar"
@@ -62,6 +61,11 @@
             android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".Settings"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".About"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/AppTheme.NoActionBar"/>

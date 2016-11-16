@@ -313,7 +313,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 viewCurret = viewId;
                 break;
 
-            case R.id.about:
+            case R.id.ic_about:
                 Intent intent = new Intent(this, About.class);
                 this.startActivity(intent);
                 break;
