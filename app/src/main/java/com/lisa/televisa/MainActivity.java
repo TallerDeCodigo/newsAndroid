@@ -6,11 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
+
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -18,7 +15,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.widget.RecyclerView;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -34,7 +30,6 @@ import android.view.MenuItem;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.lisa.televisa.model.Article;
 import com.lisa.televisa.persistence.NewsData;
 import com.lisa.televisa.request.News;
 import com.lisa.televisa.seccions.BreakingNews;
@@ -57,15 +52,12 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import static com.lisa.televisa.R.color.black;
-
-
 public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
 
+    //Public variables
+
     public static final String TAG = MainActivity.class.getName();
-    private boolean viewIsAtHome;
-    private int viewCurret;
-    private BroadcastReceiver mRegistrationBroadcastReceiver;
+
     public NewsData newsData;
     public static Activity activity;
     public News newsRequest;
@@ -74,6 +66,11 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     public TextView txtTitle, txtHashTag;
     public RelativeLayout mRoot;
 
+    //Private variables
+
+    private boolean viewIsAtHome;
+    private int viewCurret;
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,12 +79,10 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        newsData = new NewsData(getApplicationContext());
+        newsData    = new NewsData(getApplicationContext());
 
-        onLive = (RelativeLayout) findViewById(R.id.live_ad);
-
+        onLive      = (RelativeLayout) findViewById(R.id.live_ad);
         onLive.setVisibility(View.GONE);
-
         onLive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,18 +98,10 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         mRoot = (RelativeLayout) findViewById(R.id.content_main);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        //fab.setBackgroundTintList(new ColorStateList(new int[][]{new int[]{0}}, new int[]{black}));
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               /* Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent i = new Intent(getApplicationContext(), Single.class);
-                                getApplication().startActivity(i);
-                            }
-                        }).show();*/
                 Intent i = new Intent(getApplicationContext(), Onlive.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 getApplication().startActivity(i);
@@ -131,14 +118,13 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        displayView(0);
-
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
-            public void onReceive(Context context, Intent intent) {
+            public void onReceive(Context context, final Intent intent) {
 
                 // checking for type intent filter
                 if (intent.getAction().equals(Config.REGISTRATION_COMPLETE)) {
+
                     // gcm successfully registered
                     // now subscribe to `global` topic to receive app wide notifications
 
@@ -149,34 +135,46 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 } else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
                     // new push notification is received
 
-                    String message = intent.getStringExtra("message");
-                    String postID = intent.getStringExtra("postID");
+                    final String message  = intent.getStringExtra("message");
+                    final String postID   = intent.getStringExtra("postID");
 
                     Log.d(TAG, "Mensaje: " + message);
                     Log.d(TAG, "postID: " + postID);
-
 
                     Snackbar.make(mRoot, message, Snackbar.LENGTH_INDEFINITE)
                         .setAction("Ver", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent i = new Intent(getApplicationContext(), Single.class);
-                                i.putExtra("title", "");
-                                i.putExtra("content", "");
-                                i.putExtra("image", "");
-                                i.putExtra("date", "");
-                                i.putExtra("link", "");
-                                i.putExtra("postID", "");
 
-                                getApplication().startActivity(i);
+                                getSinglePost(postID);
+
                             }
                         }).setDuration(10000).show();
                 }
             }
         };
-        displayFirebaseRegId();
 
+        Bundle extras = getIntent().getExtras();
+
+        String postID = "";
+
+
+
+        //load breaking news
+        displayView(0);
+        //Display REG Fire Base
+        displayFirebaseRegId();
+        //Display Live
         getOnLive();
+
+
+        if (extras != null) {
+            postID = extras.getString("postID");
+            if(postID != null){
+                Log.d(TAG, extras.getString("postID"));
+                getSinglePost(postID);
+            }
+        }
 
 
     }
@@ -343,6 +341,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     }
 
     private void displayFirebaseRegId() {
+
         SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
         String regId = pref.getString("regId", null);
 
@@ -378,15 +377,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
         super.onPause();
     }
-
-    public void getSingleItemPost()
-    {
-        String idPost = newsData.getPostID();
-
-        Intent i = new Intent(getApplicationContext(), Single.class);
-        getApplication().startActivity(i);
-    }
-
 
     public void getOnLive() {
 
@@ -435,8 +425,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 }catch (JSONException e){
                     e.printStackTrace();
                 }
-
-
             }
 
             @Override
@@ -444,7 +432,20 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
             }
         });
-
         newsRequest.execute();
     }
+
+    public void getSinglePost(String postID){
+        Intent i = new Intent(getApplicationContext(), Single.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra("title", "");
+        i.putExtra("content", "");
+        i.putExtra("image", "");
+        i.putExtra("date", "");
+        i.putExtra("home", "home");
+        i.putExtra("link", "");
+        i.putExtra("postID", postID);
+        getApplication().startActivity(i);
+    }
 }
+

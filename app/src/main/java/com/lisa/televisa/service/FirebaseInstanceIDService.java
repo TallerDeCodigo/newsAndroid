@@ -7,14 +7,13 @@ package com.lisa.televisa.service;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 import com.lisa.televisa.config.Config;
 
-
 public class FirebaseInstanceIDService extends FirebaseInstanceIdService {
+
     private static final String TAG = FirebaseInstanceIDService.class.getSimpleName();
 
     @Override

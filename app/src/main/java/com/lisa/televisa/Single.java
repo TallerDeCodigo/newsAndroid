@@ -1,48 +1,32 @@
 package com.lisa.televisa;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.ActionBarActivity;
+
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewTreeObserver;
+
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.lisa.televisa.model.Article;
-import com.lisa.televisa.seccions.BreakingNews;
-import com.lisa.televisa.seccions.noticia;
+import com.lisa.televisa.request.News;
+import com.lisa.televisa.utils.Constants;
 
-import org.w3c.dom.Text;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import static android.view.View.GONE;
-import static com.lisa.televisa.R.color.black;
-import static com.lisa.televisa.R.drawable.blank;
 
 /**
  * Created by hever on 11/10/16.
@@ -50,10 +34,13 @@ import static com.lisa.televisa.R.drawable.blank;
 
 public class Single extends AppCompatActivity {
 
+    public static final String TAG = Single.class.getName();
     public TextView txtTitle, txtContent, date;
     public ImageView thumbnail;
     public String link = "";
     public Toolbar toolbar;
+    public News newsRequest;
+    public Constants constants;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,14 +57,6 @@ public class Single extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               /* Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent i = new Intent(getApplicationContext(), Single.class);
-                                getApplication().startActivity(i);
-                            }
-                        }).show();*/
                 Intent i = new Intent(getApplicationContext(), Onlive.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 getApplication().startActivity(i);
@@ -87,10 +66,12 @@ public class Single extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
 
-        String title    = "";
-        String content  = "";
-        String image    = "";
-        String time     = "";
+        String title        = "";
+        String content      = "";
+        String image        = "";
+        String time         = "";
+        String postID       = "";
+        String home         = "";
 
         if (extras != null) {
             title   = extras.getString("title");
@@ -98,34 +79,41 @@ public class Single extends AppCompatActivity {
             image   = extras.getString("image");
             time    = extras.getString("date");
             link    = extras.getString("link");
+            home    = extras.getString("home");
+            postID  = extras.getString("postID");
         }
 
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-        SimpleDateFormat dateformat = new SimpleDateFormat("MMMM dd, yyyy");
+        if(postID == "" || postID == null || home == "") {
 
-        try {
-            Date date = format.parse(time);
-            time = dateformat.format(date);
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            SimpleDateFormat dateformat = new SimpleDateFormat("MMMM dd, yyyy");
+
+            try {
+                Date date = format.parse(time);
+                time = dateformat.format(date);
+            } catch (ParseException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            date.setText("Fuente: Noticieros Televisa  |  " + time.substring(0, 1).toUpperCase() + time.substring(1));
+
+            txtTitle.setText(Html.fromHtml(title));
+
+            Spanned result;
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                result = Html.fromHtml(content);
+            } else {
+                result = Html.fromHtml(content);
+            }
+
+            txtContent.setText(result);
+
+            Glide.with(getApplicationContext()).load(image).dontAnimate().fitCenter().diskCacheStrategy(DiskCacheStrategy.ALL).into(thumbnail);
+        }else{
+            getPostByID(postID);
         }
-
-        date.setText("Fuente: Noticieros Televisa  |  " + time.substring(0, 1).toUpperCase() + time.substring(1));
-
-        txtTitle.setText(Html.fromHtml(title));
-
-        Spanned result;
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            result = Html.fromHtml(content);
-        } else {
-            result = Html.fromHtml(content);
-        }
-
-        txtContent.setText(result);
-
-        Glide.with(getApplicationContext()).load(image).dontAnimate().fitCenter().diskCacheStrategy(DiskCacheStrategy.ALL).into(thumbnail);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
@@ -135,14 +123,6 @@ public class Single extends AppCompatActivity {
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-        //Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.fondo);
-        //final BitmapDrawable bd = new BitmapDrawable(bitmap);
-        //final ColorDrawable cd = new ColorDrawable(Color.rgb(68, 74, 83));
-        //cd.setAlpha(0);
-        //getSupportActionBar().setBackgroundDrawable(cd);
-
-
     }
 
     @Override
@@ -172,6 +152,79 @@ public class Single extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+    public void getPostByID(String postID){
+
+        newsRequest = new News(getApplicationContext(), constants.URL_SERVICES + "post/" + postID, new News.NewsListener() {
+            @Override
+            public void onGetNews(String jsonArticles) {
+
+                try {
+
+                    JSONArray jsonArray = new JSONArray(jsonArticles);
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+
+                        try {
+
+                            String content          = jsonArray.getJSONObject(i).getString("post_content");
+                            String date_gmt         = jsonArray.getJSONObject(i).getString("post_date_gmt");
+                            String excerpt          = jsonArray.getJSONObject(i).getString("post_excerpt");
+                            String featured_media   = jsonArray.getJSONObject(i).getString("image");
+                            String guid             = "";
+                            int id                  = 0;
+                            String link             = "";
+                            String modified         = "";
+                            String modified_gmt     = "";
+                            String slug             = "";
+                            String title            = jsonArray.getJSONObject(i).getString("post_title");
+                            String type             = jsonArray.getJSONObject(i).getString("post_type");
+                            String _links           = "";
+
+                            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                            SimpleDateFormat dateformat = new SimpleDateFormat("MMMM dd, yyyy");
+
+                            try {
+                                Date date = format.parse(date_gmt);
+                                date_gmt = dateformat.format(date);
+                            } catch (ParseException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+
+                            date.setText("Fuente: Noticieros Televisa  |  " + date_gmt.substring(0, 1).toUpperCase() + date_gmt.substring(1));
+
+                            txtTitle.setText(Html.fromHtml(title));
+
+                            Spanned result;
+
+                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                                result = Html.fromHtml(content);
+                            } else {
+                                result = Html.fromHtml(content);
+                            }
+
+                            txtContent.setText(result);
+
+                            Glide.with(getApplicationContext()).load(featured_media).dontAnimate().fitCenter().diskCacheStrategy(DiskCacheStrategy.ALL).into(thumbnail);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onGetNewsFaliure() {
+
+            }
+        });
+        newsRequest.execute();
     }
 
 

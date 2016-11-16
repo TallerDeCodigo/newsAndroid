@@ -24,10 +24,10 @@
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <!-- Firebase Notifications -->
         <service android:name=".service.NewsFirebaseMessagingService">
             <intent-filter>
@@ -41,8 +41,9 @@
             </intent-filter>
         </service>
         <!-- ./Firebase Notifications -->
+
         <activity
-            android:name=".MainActivity"
+            android:name=".MainActivity" android:label="FCM"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".About" />
         <activity

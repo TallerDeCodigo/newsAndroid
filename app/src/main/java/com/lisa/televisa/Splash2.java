@@ -11,11 +11,23 @@ public class Splash2 extends AppCompatActivity {
 
     public static final String TAG = Splash2.class.getName();
 
+    public String postID;
     public ImageView appIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        postID = null;
+
+        Bundle extras = getIntent().getExtras();
+
+        if (extras != null) {
+            Log.d(TAG, extras.toString());
+            Log.d(TAG, extras.getString("postID"));
+            postID = extras.getString("postID");
+        }
+
         setContentView(R.layout.activity_splash2);
 
         appIcon = (ImageView)findViewById(R.id.appIcon);
@@ -34,6 +46,7 @@ public class Splash2 extends AppCompatActivity {
                 }
                 //Init Feed Home Breaking News
                 Intent intent = new Intent(Splash2.this, MainActivity.class);
+                intent.putExtra("postID", postID);
                 startActivity(intent);
                 finish();
             }

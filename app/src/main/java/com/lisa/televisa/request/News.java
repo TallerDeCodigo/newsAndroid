@@ -56,7 +56,6 @@ public class News extends AsyncTask<String, String, String> {
 
         Response response = null;
 
-
         try {
 
             response = client.newCall(request).execute();

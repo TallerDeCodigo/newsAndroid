@@ -28,15 +28,16 @@ public class NewsFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        Log.e(TAG, "From: " + remoteMessage.getFrom());
 
-        if (remoteMessage == null)
-            return;
+       // if (remoteMessage == null)
+       //     return;
 
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
+
             Log.e(TAG, "Notification Body: " + remoteMessage.getNotification().getBody());
-            handleNotification(remoteMessage.getNotification().getBody());
+
+            handleNotification(remoteMessage.getNotification().getBody(), remoteMessage.getData().get("postID"));
         }
 
         // Check if message contains a data payload.
@@ -50,23 +51,30 @@ public class NewsFirebaseMessagingService extends FirebaseMessagingService {
                 Log.e(TAG, "Exception: " + e.getMessage());
             }
         }
+
+        Log.d(TAG, "BACKGROUND");
+
     }
 
-    private void handleNotification(String message) {
+    private void handleNotification(String message, String postID) {
 
         if (!NotificationUtils.isAppIsInBackground(getApplicationContext())) {
             // app is in foreground, broadcast the push message
             Intent pushNotification = new Intent(Config.PUSH_NOTIFICATION);
 
             pushNotification.putExtra("message", message);
+            pushNotification.putExtra("postID", postID);
 
             LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
 
             // play notification sound
             NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
             notificationUtils.playNotificationSound();
+
         }else{
             // If the app is in background, firebase itself handles the notification
+           Log.d(TAG, "Viene de background");
+
         }
     }
 
@@ -98,8 +106,6 @@ public class NewsFirebaseMessagingService extends FirebaseMessagingService {
             Log.e(TAG, "payload: " + payload.toString());
             Log.e(TAG, "imageUrl: " + imageUrl);
             Log.e(TAG, "timestamp: " + timestamp);
-
-
 
             if (!NotificationUtils.isAppIsInBackground(getApplicationContext())) {
                 // app is in foreground, broadcast the push message
@@ -141,6 +147,7 @@ public class NewsFirebaseMessagingService extends FirebaseMessagingService {
         notificationUtils = new NotificationUtils(context);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         notificationUtils.showNotificationMessage(title, message, timeStamp, postID, intent);
+        Log.d(TAG, "text only");
     }
 
     /**
@@ -150,5 +157,6 @@ public class NewsFirebaseMessagingService extends FirebaseMessagingService {
         notificationUtils = new NotificationUtils(context);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         notificationUtils.showNotificationMessage(title, message, timeStamp, postID, intent, imageUrl);
+        Log.d(TAG, "text and image");
     }
 }
