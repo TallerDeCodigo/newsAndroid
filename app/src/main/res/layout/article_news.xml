@@ -61,7 +61,8 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:layout_marginBottom="5dp"
-                android:layout_below="@+id/img_frame" />
+                android:layout_below="@+id/img_frame"
+                android:textIsSelectable="true"/>
 
             <TextView
                 android:text="La Torre Trump, en Nueva York, fue punto de reunión de manifestantes que expresaron su apoyo u odio hacia Donald Trump."
@@ -74,7 +75,8 @@
                 android:layout_marginRight="12dp"
                 android:layout_marginBottom="6dp"
                 android:layout_below="@+id/txtTitle"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                android:textIsSelectable="true"/>
 
             <TextView
                 android:text="Agosto 12, 2016"
@@ -86,7 +88,8 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="12dp"/>
+                android:layout_marginBottom="12dp"
+                android:textIsSelectable="true"/>
 
             <ImageView
                 android:layout_width="wrap_content"
