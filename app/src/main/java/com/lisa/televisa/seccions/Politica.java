@@ -1,6 +1,7 @@
 package com.lisa.televisa.seccions;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -16,11 +17,13 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.lisa.televisa.R;
+import com.lisa.televisa.TelevisaNews;
 import com.lisa.televisa.adapter.ArticlesAdapter;
 import com.lisa.televisa.model.Article;
 import com.lisa.televisa.request.News;
 import com.lisa.televisa.utils.Constants;
 import com.lisa.televisa.utils.Helpers;
+import com.lisa.televisa.utils.PollService;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,6 +31,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 /**
  * Created by hever on 11/14/16.
@@ -44,17 +49,21 @@ public class Politica  extends Fragment {
     public ProgressBar progressBar;
     public Constants constants;
 
+    public TelevisaNews t;
+
     public Politica() {
         // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
 
-        //Request to Breaking News
+        Intent i = PollService.newIntent(getActivity());
 
+        getActivity().startService(i);
+
+        //Request to Politica
         getPostPolitica();
 
     }
@@ -118,7 +127,7 @@ public class Politica  extends Fragment {
                             String featured_media   = jsonArray.getJSONObject(i).getString("image");
                             String guid             = "";
                             int id                  = 0;
-                            String link             = "";
+                            String link             = jsonArray.getJSONObject(i).getString("post_link");
                             String modified         = "";
                             String modified_gmt     = "";
                             String slug             = "";
@@ -128,6 +137,8 @@ public class Politica  extends Fragment {
 
                             Article n = new Article(content, date_gmt, excerpt, featured_media, guid, id, link, modified, modified_gmt, slug, title, type, _links);
                             articleList.add(n);
+
+
 
                             Log.d(TAG, featured_media);
 

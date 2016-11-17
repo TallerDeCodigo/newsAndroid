@@ -143,12 +143,10 @@ public class Single extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+
             case R.id.action_share:
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, link);
-                sendIntent.setType("text/plain");
-                this.startActivity(Intent.createChooser(sendIntent, "Compartir"));
+
+                ShareThis(link);
                 return true;
 
             case android.R.id.home:
@@ -236,6 +234,18 @@ public class Single extends AppCompatActivity {
             }
         });
         newsRequest.execute();
+    }
+
+    public void ShareThis(String message)
+    {
+        Intent sendIntent = new Intent();
+
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(sendIntent.EXTRA_SUBJECT, "televisa.NEWS");
+        sendIntent.putExtra(sendIntent.EXTRA_TEXT, message);
+        sendIntent.setType("text/plain");
+
+        getApplicationContext().startActivity(Intent.createChooser(sendIntent, "Compartir"));
     }
 
 

@@ -48,6 +48,7 @@ import com.lisa.televisa.utils.NotificationUtils;
 import com.lisa.televisa.seccions.noticia;
 
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.lisa.televisa.utils.PollService;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

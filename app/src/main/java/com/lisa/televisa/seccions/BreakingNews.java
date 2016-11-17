@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.lisa.televisa.R;
+import com.lisa.televisa.TelevisaNews;
 import com.lisa.televisa.adapter.ArticlesAdapter;
 import com.lisa.televisa.model.Article;
 import com.lisa.televisa.request.News;
@@ -42,6 +43,7 @@ public class BreakingNews extends Fragment {
     public News newsRequest;
     public Helpers helpers;
     public ProgressBar progressBar;
+    public TelevisaNews t;
 
     public BreakingNews() {
         // Required empty public constructor
@@ -52,12 +54,7 @@ public class BreakingNews extends Fragment {
 
         super.onCreate(savedInstanceState);
 
-        //Request to Breaking News
-
-
-
         getBreakingNews();
-
     }
 
     @Override
@@ -96,8 +93,6 @@ public class BreakingNews extends Fragment {
 
         helpers = new Helpers();
 
-
-
         newsRequest = new News(getContext(), "https://www.televisa.news/wp-json/news/v1/region/cdmx", new News.NewsListener() {
 
             @Override
@@ -119,7 +114,7 @@ public class BreakingNews extends Fragment {
                             String featured_media   = jsonArray.getJSONObject(i).getString("image");
                             String guid             = "";
                             int id                  = 0;
-                            String link             = "";
+                            String link             = jsonArray.getJSONObject(i).getString("post_link");
                             String modified         = "";
                             String modified_gmt     = "";
                             String slug             = "";
@@ -130,8 +125,6 @@ public class BreakingNews extends Fragment {
 
                             Article n = new Article(content, date_gmt, excerpt, featured_media, guid, id, link, modified, modified_gmt, slug, title, type, _links);
                             articleList.add(n);
-
-
 
                         } catch (JSONException e) {
                             e.printStackTrace();

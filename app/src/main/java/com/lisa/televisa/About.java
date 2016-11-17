@@ -28,7 +28,6 @@ public class About extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
-
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
