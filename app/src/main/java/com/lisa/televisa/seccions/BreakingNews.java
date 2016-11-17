@@ -15,17 +15,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.lisa.televisa.R;
 import com.lisa.televisa.adapter.ArticlesAdapter;
 import com.lisa.televisa.model.Article;
 import com.lisa.televisa.request.News;
 import com.lisa.televisa.utils.Helpers;
+import com.lisa.televisa.utils.PollService;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +47,7 @@ public class BreakingNews extends Fragment {
     public News newsRequest;
     public Helpers helpers;
     public ProgressBar progressBar;
+    public PollService Check;
 
     public BreakingNews() {
         // Required empty public constructor
@@ -53,10 +59,10 @@ public class BreakingNews extends Fragment {
         super.onCreate(savedInstanceState);
 
         //Request to Breaking News
-
-
-
-        getBreakingNews();
+        Check= new PollService();
+        if (Check.isOnline()){
+                getBreakingNews();
+        }
 
     }
 
@@ -95,8 +101,6 @@ public class BreakingNews extends Fragment {
     public void getBreakingNews(){
 
         helpers = new Helpers();
-
-
 
         newsRequest = new News(getContext(), "https://www.televisa.news/wp-json/news/v1/region/cdmx", new News.NewsListener() {
 
@@ -160,55 +164,6 @@ public class BreakingNews extends Fragment {
     }
 
 
-    public void setImagesIntoModel(List<Article> articleList){
-
-        helpers = new Helpers();
-
-        for (int i=0; i<articleList.size(); i++) {
-
-            final Article article = articleList.get(i);
-
-            String url = "https://televisa.news/wp-json/wp/v2/media/" + article.getFeatured_media();
-
-            newsRequest = new News(getContext(),url , new News.NewsListener() {
-
-                String urlImage = "";
-
-                @Override
-                public void onGetNews(String jsonArticles) {
-                    try {
-
-                        JSONObject jsonObject = new JSONObject(jsonArticles);
-
-                        try {
-
-                            urlImage   = jsonObject.getString("source_url");
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-
-
-                    }catch (JSONException e){
-                        e.printStackTrace();
-                    }
-                    article.setFeatured_media(urlImage);
-                }
-
-                @Override
-                public void onGetNewsFaliure() {
-
-                }
-            });
-            newsRequest.execute();
-        }
-
-        adapter.notifyDataSetChanged();
-
-
-    }
 
     /**
      * RecyclerView item decoration - give equal margin around grid item

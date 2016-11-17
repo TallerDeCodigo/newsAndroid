@@ -1,8 +1,10 @@
 package com.lisa.televisa;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -29,6 +31,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lisa.televisa.persistence.NewsData;
 import com.lisa.televisa.request.News;
@@ -48,6 +51,7 @@ import com.lisa.televisa.utils.NotificationUtils;
 import com.lisa.televisa.seccions.noticia;
 
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.lisa.televisa.utils.PollService;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -65,6 +69,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     public RelativeLayout onLive;
     public TextView txtTitle, txtHashTag;
     public RelativeLayout mRoot;
+    public PollService Check;
 
     //Private variables
 
@@ -165,7 +170,11 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         //Display REG Fire Base
         displayFirebaseRegId();
         //Display Live
-        getOnLive();
+        Check = new PollService();
+        if (Check.isOnline()){
+            getOnLive();
+        }
+
 
 
         if (extras != null) {
@@ -369,7 +378,25 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         // clear the notification area when the app is opened
         NotificationUtils.clearNotifications(getApplicationContext());
 
-        getOnLive();
+        Check = new PollService();
+        if (Check.isOnline()){
+            Log.d("entra","ENTRA");
+            getOnLive();
+        } else {
+            AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+            alertDialog.setTitle("televisa.NEWS");
+            alertDialog.setMessage("Esta aplicación requiere una conexión a internet.");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Salir",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            MainActivity.this.finish();
+                            System.exit(0);
+                        }
+                    });
+            alertDialog.show();
+        }
+
     }
 
     @Override
