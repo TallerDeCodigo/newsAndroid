@@ -4,8 +4,19 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+
+import com.lisa.televisa.model.Article;
+import com.lisa.televisa.request.News;
+import com.lisa.televisa.utils.Helpers;
 import com.lisa.televisa.utils.PollService;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Splash2 extends AppCompatActivity {
 
@@ -13,10 +24,14 @@ public class Splash2 extends AppCompatActivity {
 
     public String postID;
     public ImageView appIcon;
+    public News newsRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_splash2);
+
 
         postID = null;
 
@@ -28,8 +43,6 @@ public class Splash2 extends AppCompatActivity {
                 postID = extras.getString("postID");
         }
 
-        setContentView(R.layout.activity_splash2);
-
         appIcon = (ImageView)findViewById(R.id.appIcon);
 
         Thread mSplashThread = new Thread() {
@@ -38,6 +51,7 @@ public class Splash2 extends AppCompatActivity {
                 try {
                     synchronized (this) {
                         Log.i(TAG,"Init app");
+
                         wait(3000);
                     }
 

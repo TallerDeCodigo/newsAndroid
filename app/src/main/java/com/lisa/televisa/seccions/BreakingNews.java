@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.lisa.televisa.R;
+import com.lisa.televisa.TelevisaNews;
 import com.lisa.televisa.adapter.ArticlesAdapter;
 import com.lisa.televisa.model.Article;
 import com.lisa.televisa.request.News;
@@ -57,7 +58,7 @@ public class BreakingNews extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
+        
         //Request to Breaking News
         Check= new PollService();
         if (Check.isOnline()){
@@ -123,7 +124,7 @@ public class BreakingNews extends Fragment {
                             String featured_media   = jsonArray.getJSONObject(i).getString("image");
                             String guid             = "";
                             int id                  = 0;
-                            String link             = "";
+                            String link             = jsonArray.getJSONObject(i).getString("post_link");
                             String modified         = "";
                             String modified_gmt     = "";
                             String slug             = "";
@@ -134,8 +135,6 @@ public class BreakingNews extends Fragment {
 
                             Article n = new Article(content, date_gmt, excerpt, featured_media, guid, id, link, modified, modified_gmt, slug, title, type, _links);
                             articleList.add(n);
-
-
 
                         } catch (JSONException e) {
                             e.printStackTrace();

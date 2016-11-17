@@ -20,7 +20,7 @@ public class PollService extends IntentService {
 
     public static Intent newIntent(Context context){
 
-        return newIntent(context);
+        return new Intent(context, PollService.class);
 
     }
 

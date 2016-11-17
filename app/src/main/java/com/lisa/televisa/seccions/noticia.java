@@ -103,7 +103,7 @@ public class noticia extends Fragment {
                             String featured_media   = jsonArray.getJSONObject(i).getString("featured_media");
                             String guid             = jsonArray.getJSONObject(i).getString("guid");
                             int id                  = 0;
-                            String link             = jsonArray.getJSONObject(i).getString("link");
+                            String link             = jsonArray.getJSONObject(i).getString("post_link");
                             String modified         = jsonArray.getJSONObject(i).getString("modified");
                             String modified_gmt     = jsonArray.getJSONObject(i).getString("modified_gmt");
                             String slug             = jsonArray.getJSONObject(i).getString("slug");

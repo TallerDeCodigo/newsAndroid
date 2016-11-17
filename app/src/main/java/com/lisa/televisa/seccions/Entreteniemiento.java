@@ -115,7 +115,7 @@ public class Entreteniemiento extends Fragment {
                             String featured_media   = jsonArray.getJSONObject(i).getString("image");
                             String guid             = "";
                             int id                  = 0;
-                            String link             = "";
+                            String link             = jsonArray.getJSONObject(i).getString("post_link");
                             String modified         = "";
                             String modified_gmt     = "";
                             String slug             = "";
