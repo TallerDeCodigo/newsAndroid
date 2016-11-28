@@ -4,7 +4,7 @@
     <item
         android:title="EN VIVO"
         android:icon="@drawable/ic_cam1"
-        android:id="@+id/go_live" />
+        android:id="@+id/go_live_m" />
 
     <item
         android:title="Mis Alertas"
