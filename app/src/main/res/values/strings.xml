@@ -4,7 +4,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Notificaciones</string>
+    <string name="action_settings">Mis alertas</string>
     <string name="message_error_load">Error en la carga de información</string>
 
     <string name="title_activity_onlive">Onlive</string>

@@ -58,7 +58,7 @@ public class BreakingNews extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        
+
         //Request to Breaking News
         Check= new PollService();
         if (Check.isOnline()){
@@ -108,6 +108,9 @@ public class BreakingNews extends Fragment {
             @Override
             public void onGetNews(String json) {
 
+                if (json==null){
+                    json = "nada";
+                }
                 Log.i(TAG, json);
 
                 try {
@@ -153,6 +156,12 @@ public class BreakingNews extends Fragment {
 
             @Override
             public void onGetNewsFaliure() {
+
+                Log.i(TAG, "error en la carga");
+
+                progressBar.setVisibility(View.GONE);
+
+                Toast.makeText(getActivity(), "No hay artículos", Toast.LENGTH_LONG).show();
 
             }
         });

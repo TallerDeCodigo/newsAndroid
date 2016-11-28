@@ -293,35 +293,35 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 viewCurret = viewId;
                 break;
 
-            case R.id.nav_tecnologia:
-                fragment = new Ciencia();
-                viewIsAtHome = false;
-                viewCurret = viewId;
-                break;
+            //case R.id.nav_tecnologia:
+            //fragment = new Ciencia();
+            //viewIsAtHome = false;
+            //viewCurret = viewId;
+            //break;
 
-            case R.id.nav_cultura:
-                fragment = new Ciencia();
-                viewIsAtHome = false;
-                viewCurret = viewId;
-                break;
+            //case R.id.nav_cultura:
+            //   fragment = new Ciencia();
+            //  viewIsAtHome = false;
+            //  viewCurret = viewId;
+            //  break;
 
-            case R.id.nav_deportes:
-                fragment = new Deportes();
-                viewIsAtHome = false;
-                viewCurret = viewId;
-                break;
+            //case R.id.nav_deportes:
+                //    fragment = new Deportes();
+            //   viewIsAtHome = false;
+            //   viewCurret = viewId;
+            //    break;
 
-            case R.id.nav_entretenimiento:
-                fragment = new Entreteniemiento();
-                viewIsAtHome = false;
-                viewCurret = viewId;
-                break;
+            //case R.id.nav_entretenimiento:
+                //    fragment = new Entreteniemiento();
+            //    viewIsAtHome = false;
+            //    viewCurret = viewId;
+            //   break;
 
-            case R.id.nav_vida:
-                fragment = new Vida();
-                viewIsAtHome = false;
-                viewCurret = viewId;
-                break;
+            //case R.id.nav_vida:
+            //    fragment = new Vida();
+            //   viewIsAtHome = false;
+            //    viewCurret = viewId;
+            //    break;
 
             case R.id.ic_about:
                 Intent intent = new Intent(this, About.class);
@@ -413,6 +413,10 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             @Override
             public void onGetNews(String jsonArticles) {
 
+                if (jsonArticles==null){
+                    jsonArticles = "nada";
+                }
+
                 try {
 
                     Log.d(TAG, jsonArticles);
@@ -457,6 +461,8 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
             @Override
             public void onGetNewsFaliure() {
+
+                Log.i(TAG, "error en la carga");
 
             }
         });

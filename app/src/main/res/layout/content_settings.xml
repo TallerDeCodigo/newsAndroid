@@ -95,12 +95,24 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true" />
 
+                <Switch
+                    android:text="Estados"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sw_edos"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_below="@+id/sw_cdmx"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true" />
+
             </RelativeLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tópico"
+                android:text="Temas"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:textSize="16dp"
@@ -120,7 +132,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/sw_politica"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginLeft="10dp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentStart="true" />
@@ -146,66 +158,6 @@
                     android:layout_marginTop="25dp"
                     android:layout_marginLeft="10dp"
                     android:layout_below="@+id/sw_economia"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentEnd="true" />
-
-                <Switch
-                    android:text="Ciencia y Tecnología"
-                    android:textColor="@color/black"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/sw_tecnologia"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/sw_opinion"
-                    android:layout_alignParentStart="true" />
-
-                <Switch
-                    android:text="Cultura"
-                    android:textColor="@color/black"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/sw_cultura"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_below="@+id/sw_tecnologia"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentEnd="true" />
-
-                <Switch
-                    android:text="Deporte"
-                    android:textColor="@color/black"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/sw_deporte"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_below="@+id/sw_cultura"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentEnd="true" />
-
-                <Switch
-                    android:text="Entretenimiento"
-                    android:textColor="@color/black"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/sw_entretenimiento"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_below="@+id/sw_deporte"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentEnd="true" />
-
-                <Switch
-                    android:text="Vida y Estilo"
-                    android:textColor="@color/black"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/sw_vida"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_below="@+id/sw_entretenimiento"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true" />
 

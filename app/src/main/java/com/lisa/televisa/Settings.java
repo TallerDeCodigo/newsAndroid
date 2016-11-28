@@ -39,11 +39,11 @@ public class Settings extends AppCompatActivity {
         pSwitch         = (Switch) findViewById(R.id.sw_politica);
         eSwitch         = (Switch) findViewById(R.id.sw_economia);
         oSwitch         = (Switch) findViewById(R.id.sw_opinion);
-        ciSwitch        = (Switch) findViewById(R.id.sw_tecnologia);
-        culSwitch       = (Switch) findViewById(R.id.sw_cultura);
-        depSwitch       = (Switch) findViewById(R.id.sw_deporte);
-        entSwitch       = (Switch) findViewById(R.id.sw_entretenimiento);
-        vidaSwitch      = (Switch) findViewById(R.id.sw_vida);
+        //ciSwitch        = (Switch) findViewById(R.id.sw_tecnologia);
+        //culSwitch       = (Switch) findViewById(R.id.sw_cultura);
+        //depSwitch       = (Switch) findViewById(R.id.sw_deporte);
+        //entSwitch       = (Switch) findViewById(R.id.sw_entretenimiento);
+        //vidaSwitch      = (Switch) findViewById(R.id.sw_vida);
 
 
 
@@ -56,11 +56,11 @@ public class Settings extends AppCompatActivity {
         pSwitch.setChecked(newsData.getNotificationON(newsData.PUSH_POLITICA).equals("1"));
         eSwitch.setChecked(newsData.getNotificationON(newsData.PUSH_ECONOMIA).equals("1"));
         oSwitch.setChecked(newsData.getNotificationON(newsData.PUSH_OPINION).equals("1"));
-        ciSwitch.setChecked(newsData.getNotificationON(newsData.PUSH_CIENCIAYTECNOLOGIA).equals("1"));
-        culSwitch.setChecked(newsData.getNotificationON(newsData.PUSH_CULTURA).equals("1"));
-        depSwitch.setChecked(newsData.getNotificationON(newsData.PUSH_DEPORTES).equals("1"));
-        entSwitch.setChecked(newsData.getNotificationON(newsData.PUSH_ENTRETENIMIENTO).equals("1"));
-        vidaSwitch.setChecked(newsData.getNotificationON(newsData.PUSH_VIDAYESTILO).equals("1"));
+        //ciSwitch.setChecked(newsData.getNotificationON(newsData.PUSH_CIENCIAYTECNOLOGIA).equals("1"));
+        //culSwitch.setChecked(newsData.getNotificationON(newsData.PUSH_CULTURA).equals("1"));
+        //depSwitch.setChecked(newsData.getNotificationON(newsData.PUSH_DEPORTES).equals("1"));
+        //entSwitch.setChecked(newsData.getNotificationON(newsData.PUSH_ENTRETENIMIENTO).equals("1"));
+        //vidaSwitch.setChecked(newsData.getNotificationON(newsData.PUSH_VIDAYESTILO).equals("1"));
 
 
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -155,74 +155,7 @@ public class Settings extends AppCompatActivity {
             }
         });
 
-        ciSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if(isChecked) {
-                newsData.notificationSave(newsData.PUSH_CIENCIAYTECNOLOGIA, "1");
-                FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_CYT);
-            } else {
-                newsData.notificationSave(newsData.PUSH_CIENCIAYTECNOLOGIA, "0");
-                FirebaseMessaging.getInstance().unsubscribeFromTopic(Config.TOPIC_CYT);
-            }
-            }
-        });
-
-        culSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if(isChecked) {
-                newsData.notificationSave(newsData.PUSH_CULTURA, "1");
-                FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_CUL);
-            } else {
-                newsData.notificationSave(newsData.PUSH_CULTURA, "0");
-                FirebaseMessaging.getInstance().unsubscribeFromTopic(Config.TOPIC_CUL);
-            }
-            }
-        });
-
-        depSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-            if(isChecked) {
-                newsData.notificationSave(newsData.PUSH_DEPORTES, "1");
-                FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_DEP);
-            } else {
-                newsData.notificationSave(newsData.PUSH_DEPORTES, "0");
-                FirebaseMessaging.getInstance().unsubscribeFromTopic(Config.TOPIC_DEP);
-            }
-            }
-        });
-
-        entSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
-                    newsData.notificationSave(newsData.PUSH_ENTRETENIMIENTO, "1");
-                    FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_ENT);
-                } else {
-                    newsData.notificationSave(newsData.PUSH_ENTRETENIMIENTO, "0");
-                    FirebaseMessaging.getInstance().unsubscribeFromTopic(Config.TOPIC_ENT);
-                }
-            }
-        });
-
-        vidaSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                if(isChecked) {
-                    newsData.notificationSave(newsData.PUSH_VIDAYESTILO, "1");
-                    FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_VYE);
-                } else {
-                    newsData.notificationSave(newsData.PUSH_VIDAYESTILO, "0");
-                    FirebaseMessaging.getInstance().unsubscribeFromTopic(Config.TOPIC_VYE);
-                }
-            }
-        });
-
-        getSupportActionBar().setTitle("Notificaciones");
+        getSupportActionBar().setTitle("Mis Alertas");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
